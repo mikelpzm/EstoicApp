@@ -100,7 +100,7 @@ function App() {
               <MeditationCard
                 meditation={randomMeditation}
                 themes={themes}
-                isDaily={true}
+                isDaily={false}
               />
             )}
 
