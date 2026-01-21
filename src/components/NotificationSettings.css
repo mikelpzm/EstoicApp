@@ -259,3 +259,71 @@
     transform: translateY(0);
   }
 }
+
+/* iOS Guide Styles */
+.notification-ios-guide {
+  text-align: center;
+}
+
+.notification-ios-guide .guide-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.notification-ios-guide h4 {
+  margin: 0 0 0.75rem;
+  color: var(--gold);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.notification-ios-guide > p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0 0 1.5rem;
+}
+
+.notification-ios-guide strong {
+  color: var(--text-primary);
+}
+
+.guide-steps {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 1.25rem;
+  text-align: left;
+}
+
+.guide-steps > p {
+  margin: 0 0 0.75rem;
+  color: var(--gold);
+  font-size: 0.9rem;
+}
+
+.guide-steps ol {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+.guide-steps li {
+  margin-bottom: 0.5rem;
+}
+
+.guide-steps li:last-child {
+  margin-bottom: 0;
+}
+
+.guide-steps li strong {
+  color: var(--text-primary);
+}
+
+.share-icon {
+  display: inline-block;
+  font-size: 0.85em;
+}

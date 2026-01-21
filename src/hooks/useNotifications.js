@@ -3,9 +3,33 @@ import { useState, useEffect, useCallback } from 'react';
 const NOTIFICATION_SETTINGS_KEY = 'meditation-notification-settings';
 const BASE_PATH = '/EstoicApp/';
 
+// Detectar plataforma y navegador
+function detectPlatform() {
+  const ua = navigator.userAgent;
+  const isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const isSafari = /^((?!chrome|android).)*safari/i.test(ua);
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
+                       window.navigator.standalone === true;
+  const isChrome = /Chrome/.test(ua) && !/Edge|Edg/.test(ua);
+  const isFirefox = /Firefox/.test(ua);
+
+  return {
+    isIOS,
+    isSafari,
+    isStandalone,
+    isChrome,
+    isFirefox,
+    // En iOS, solo Safari puede instalar PWAs y solo Safari en modo standalone soporta notificaciones
+    canInstallPWA: isIOS ? isSafari : true,
+    // Notificaciones requieren: iOS con Safari instalado como PWA, o cualquier navegador moderno en otras plataformas
+    canUseNotifications: isIOS ? (isSafari && isStandalone) : ('Notification' in window)
+  };
+}
+
 export function useNotifications() {
   const [permission, setPermission] = useState('default');
   const [isSupported, setIsSupported] = useState(false);
+  const [platform, setPlatform] = useState(() => detectPlatform());
   const [settings, setSettings] = useState(() => {
     const saved = localStorage.getItem(NOTIFICATION_SETTINGS_KEY);
     return saved ? JSON.parse(saved) : {
@@ -18,13 +42,18 @@ export function useNotifications() {
 
   // Verificar soporte y registrar Service Worker
   useEffect(() => {
-    const supported = 'serviceWorker' in navigator && 'Notification' in window;
+    const platformInfo = detectPlatform();
+    setPlatform(platformInfo);
+
+    const supported = 'serviceWorker' in navigator && platformInfo.canUseNotifications;
     setIsSupported(supported);
 
-    if (supported) {
+    if ('Notification' in window) {
       setPermission(Notification.permission);
+    }
 
-      // Registrar Service Worker
+    // Registrar Service Worker siempre (para offline)
+    if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register(BASE_PATH + 'sw.js')
         .then((registration) => {
           console.log('Service Worker registrado:', registration.scope);
@@ -141,6 +170,7 @@ export function useNotifications() {
     isSupported,
     permission,
     settings,
+    platform,
     requestPermission,
     sendTestNotification,
     updateSettings,
