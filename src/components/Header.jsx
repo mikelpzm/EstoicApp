@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Header({ onShowDaily, onShowAll }) {
+export default function Header({ onShowDaily, onShowAll, onRandom }) {
   return (
     <header className="header">
       <div className="header-content">
@@ -13,6 +13,10 @@ export default function Header({ onShowDaily, onShowAll }) {
           <button onClick={onShowDaily} className="nav-btn">
             <span className="nav-icon">☀️</span>
             Hoy
+          </button>
+          <button onClick={onRandom} className="nav-btn">
+            <span className="nav-icon">🎲</span>
+            Aleatoria
           </button>
           <button onClick={onShowAll} className="nav-btn">
             <span className="nav-icon">📚</span>
