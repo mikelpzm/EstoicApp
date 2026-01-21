@@ -5,6 +5,7 @@ import ThemeFilter from './components/ThemeFilter';
 import BookFilter from './components/BookFilter';
 import MeditationList from './components/MeditationList';
 import MeditationCard from './components/MeditationCard';
+import NotificationSettings from './components/NotificationSettings';
 import data from './data/meditations.json';
 import './App.css';
 
@@ -14,6 +15,7 @@ function App() {
   const [selectedTheme, setSelectedTheme] = useState(null);
   const [selectedBook, setSelectedBook] = useState(null);
   const [randomMeditation, setRandomMeditation] = useState(null);
+  const [showNotifications, setShowNotifications] = useState(false);
 
   const { meditations, themes } = data;
 
@@ -78,6 +80,7 @@ function App() {
         onShowDaily={handleShowDaily}
         onShowAll={handleShowAll}
         onRandom={handleRandomMeditation}
+        onNotifications={() => setShowNotifications(true)}
       />
 
       <main className="main-content">
@@ -169,6 +172,14 @@ function App() {
           "La vida de un hombre es lo que sus pensamientos hacen de ella"
         </p>
       </footer>
+
+      {showNotifications && (
+        <div className="modal-overlay" onClick={() => setShowNotifications(false)}>
+          <div onClick={(e) => e.stopPropagation()}>
+            <NotificationSettings onClose={() => setShowNotifications(false)} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
