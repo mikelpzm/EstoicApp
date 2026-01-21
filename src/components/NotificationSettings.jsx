@@ -7,6 +7,7 @@ function NotificationSettings({ onClose }) {
     isSupported,
     permission,
     settings,
+    platform,
     toggleNotifications,
     updateSettings,
     sendTestNotification
@@ -39,6 +40,74 @@ function NotificationSettings({ onClose }) {
     }
   };
 
+  // Caso: iOS con navegador que no es Safari
+  if (platform.isIOS && !platform.isSafari) {
+    return (
+      <div className="notification-settings">
+        <div className="notification-header">
+          <h3>Notificaciones</h3>
+          <button className="close-btn" onClick={onClose}>
+            <span>×</span>
+          </button>
+        </div>
+        <div className="notification-content">
+          <div className="notification-ios-guide">
+            <span className="guide-icon">🍎</span>
+            <h4>Usa Safari para notificaciones</h4>
+            <p>
+              En iOS, las notificaciones web solo funcionan con <strong>Safari</strong>.
+              Chrome, Brave y otros navegadores en iOS no soportan esta función.
+            </p>
+            <div className="guide-steps">
+              <p><strong>Pasos:</strong></p>
+              <ol>
+                <li>Abre esta página en <strong>Safari</strong></li>
+                <li>Toca el botón <strong>Compartir</strong> (cuadrado con flecha)</li>
+                <li>Selecciona <strong>"Añadir a pantalla de inicio"</strong></li>
+                <li>Abre la app desde tu pantalla de inicio</li>
+                <li>Activa las notificaciones</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Caso: iOS con Safari pero no instalado como PWA
+  if (platform.isIOS && platform.isSafari && !platform.isStandalone) {
+    return (
+      <div className="notification-settings">
+        <div className="notification-header">
+          <h3>Notificaciones</h3>
+          <button className="close-btn" onClick={onClose}>
+            <span>×</span>
+          </button>
+        </div>
+        <div className="notification-content">
+          <div className="notification-ios-guide">
+            <span className="guide-icon">📲</span>
+            <h4>Instala la app primero</h4>
+            <p>
+              Para recibir notificaciones en iOS, necesitas instalar la app en tu pantalla de inicio.
+            </p>
+            <div className="guide-steps">
+              <p><strong>Pasos:</strong></p>
+              <ol>
+                <li>Toca el botón <strong>Compartir</strong> <span className="share-icon">⬆️</span> en la barra de Safari</li>
+                <li>Desplázate y selecciona <strong>"Añadir a pantalla de inicio"</strong></li>
+                <li>Toca <strong>"Añadir"</strong></li>
+                <li>Abre la app desde tu pantalla de inicio</li>
+                <li>Vuelve aquí para activar las notificaciones</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Caso: Navegador no soporta notificaciones (desktop antiguo, etc.)
   if (!isSupported) {
     return (
       <div className="notification-settings">
@@ -50,7 +119,7 @@ function NotificationSettings({ onClose }) {
         </div>
         <div className="notification-content">
           <p className="notification-unsupported">
-            Tu navegador no soporta notificaciones. Prueba con Chrome, Firefox o Edge en escritorio o móvil.
+            Tu navegador no soporta notificaciones. Prueba con Chrome, Firefox o Edge en escritorio, o Safari en iOS.
           </p>
         </div>
       </div>
