@@ -1,0 +1,579 @@
+{
+  "author": "Marco Aurelio",
+  "title": "Meditaciones",
+  "description": "Reflexiones del emperador filósofo romano Marco Aurelio (121-180 d.C.)",
+  "themes": [
+    { "id": "virtue", "name": "Virtud", "icon": "⚖️" },
+    { "id": "death", "name": "Muerte y Mortalidad", "icon": "💀" },
+    { "id": "nature", "name": "Naturaleza", "icon": "🌿" },
+    { "id": "duty", "name": "Deber y Responsabilidad", "icon": "🏛️" },
+    { "id": "mind", "name": "Control Mental", "icon": "🧠" },
+    { "id": "time", "name": "Tiempo y Transitoriedad", "icon": "⏳" },
+    { "id": "adversity", "name": "Adversidad", "icon": "🔥" },
+    { "id": "relationships", "name": "Relaciones Humanas", "icon": "🤝" },
+    { "id": "simplicity", "name": "Simplicidad", "icon": "🪨" },
+    { "id": "wisdom", "name": "Sabiduría", "icon": "📜" }
+  ],
+  "meditations": [
+    {
+      "id": 1,
+      "book": 1,
+      "chapter": 1,
+      "text": "De mi abuelo Vero aprendí la bondad y la mansedumbre.",
+      "themes": ["virtue", "relationships"]
+    },
+    {
+      "id": 2,
+      "book": 1,
+      "chapter": 2,
+      "text": "De la fama y memoria de mi padre, la modestia y el carácter viril.",
+      "themes": ["virtue", "duty"]
+    },
+    {
+      "id": 3,
+      "book": 1,
+      "chapter": 3,
+      "text": "De mi madre, la piedad y la generosidad, y el abstenerse no solo de obrar mal, sino incluso de incurrir en semejante pensamiento.",
+      "themes": ["virtue", "mind"]
+    },
+    {
+      "id": 4,
+      "book": 2,
+      "chapter": 1,
+      "text": "Al amanecer, cuando de mala gana y perezosamente despiertes, acuda pronto a tu mente este pensamiento: despierto para cumplir una tarea propia de hombre.",
+      "themes": ["duty", "mind"]
+    },
+    {
+      "id": 5,
+      "book": 2,
+      "chapter": 4,
+      "text": "Recuerda cuánto tiempo hace que difieres estas cosas y cuántas veces has recibido avisos de los dioses sin aprovecharlos. Es preciso que a partir de ahora te des cuenta de qué mundo eres parte y de qué gobernante del mundo procedes como emanación.",
+      "themes": ["time", "nature", "wisdom"]
+    },
+    {
+      "id": 6,
+      "book": 2,
+      "chapter": 5,
+      "text": "A cada hora, preocúpate con resolución, como romano y como hombre, de hacer lo que tienes entre manos con puntual y no fingida gravedad, con amor, libertad y justicia.",
+      "themes": ["duty", "virtue"]
+    },
+    {
+      "id": 7,
+      "book": 2,
+      "chapter": 11,
+      "text": "¿Qué es morir? Si se mira la muerte en sí misma, despojándola con el análisis de la razón de los fantasmas que la envuelven, no parecerá otra cosa sino una función de la naturaleza.",
+      "themes": ["death", "nature", "mind"]
+    },
+    {
+      "id": 8,
+      "book": 2,
+      "chapter": 14,
+      "text": "Aunque fueras a vivir tres mil años o diez mil, recuerda que nadie pierde otra vida que la que vive, ni vive otra que la que pierde.",
+      "themes": ["time", "death", "wisdom"]
+    },
+    {
+      "id": 9,
+      "book": 2,
+      "chapter": 17,
+      "text": "De la vida humana, el tiempo es un punto, la sustancia fluyente, la sensación oscura, la composición del cuerpo entero fácilmente corruptible, el alma un torbellino, la fortuna cosa difícil de conjeturar, la fama algo sin sentido.",
+      "themes": ["time", "death", "simplicity"]
+    },
+    {
+      "id": 10,
+      "book": 3,
+      "chapter": 4,
+      "text": "No desperdicies lo que te queda de vida en pensamientos sobre los demás, a no ser que lo hagas con vistas a algún bien común.",
+      "themes": ["mind", "relationships", "duty"]
+    },
+    {
+      "id": 11,
+      "book": 3,
+      "chapter": 10,
+      "text": "Olvida todo lo demás. Retén solo esto: cada uno vive exclusivamente el presente, este instante fugaz. Lo demás, o se ha vivido ya, o es incierto.",
+      "themes": ["time", "mind", "simplicity"]
+    },
+    {
+      "id": 12,
+      "book": 3,
+      "chapter": 12,
+      "text": "Si te aplicaras a seguir tu nombre, es decir, si te esforzaras por ser bueno, y te contentaras con tu propio lote en la distribución del todo, y si procuraras rectitud en toda palabra y acto tuyo, llevarías una vida feliz.",
+      "themes": ["virtue", "simplicity", "wisdom"]
+    },
+    {
+      "id": 13,
+      "book": 4,
+      "chapter": 3,
+      "text": "Buscan retiros en el campo, en la costa y en el monte. Tú mismo sueles añorar tales huidas. Pero todo eso es de lo más vulgar, porque puedes, en el momento que te plazca, retirarte en ti mismo.",
+      "themes": ["mind", "simplicity"]
+    },
+    {
+      "id": 14,
+      "book": 4,
+      "chapter": 7,
+      "text": "Suprime la opinión de que has sido dañado, y desaparece el daño; suprime el daño, y este desaparece.",
+      "themes": ["mind", "adversity", "wisdom"]
+    },
+    {
+      "id": 15,
+      "book": 4,
+      "chapter": 17,
+      "text": "No vivas como si fueras a vivir diez mil años. La muerte te acecha. Mientras vivas, mientras te sea posible, sé virtuoso.",
+      "themes": ["death", "virtue", "time"]
+    },
+    {
+      "id": 16,
+      "book": 4,
+      "chapter": 26,
+      "text": "Has visto esas cosas; mira también estas otras: no te perturbes a ti mismo, simplifícate. ¿Comete alguien una falta? Contra sí mismo la comete.",
+      "themes": ["mind", "simplicity", "relationships"]
+    },
+    {
+      "id": 17,
+      "book": 4,
+      "chapter": 33,
+      "text": "Todo lo que ves perecerá rápidamente y los que contemplen su destrucción, también ellos perecerán muy pronto. El que muere en extrema vejez quedará igualado al que muere prematuramente.",
+      "themes": ["death", "time", "nature"]
+    },
+    {
+      "id": 18,
+      "book": 4,
+      "chapter": 49,
+      "text": "Sé semejante al promontorio contra el que continuamente se estrellan las olas; él permanece firme y en torno a él se adormece la furia del oleaje.",
+      "themes": ["adversity", "mind", "wisdom"]
+    },
+    {
+      "id": 19,
+      "book": 5,
+      "chapter": 1,
+      "text": "Al amanecer, cuando te cueste trabajo levantarte, ten presente este pensamiento: despierto para realizar mi tarea de hombre. ¿Voy a seguir quejándome si tengo que hacer aquello para lo que nací y para lo que he sido traído al mundo?",
+      "themes": ["duty", "nature", "mind"]
+    },
+    {
+      "id": 20,
+      "book": 5,
+      "chapter": 6,
+      "text": "Una rama cortada de la rama contigua necesariamente queda también separada del árbol entero. Del mismo modo un hombre separado de un solo hombre se ha alejado de la comunidad entera.",
+      "themes": ["relationships", "nature", "duty"]
+    },
+    {
+      "id": 21,
+      "book": 5,
+      "chapter": 8,
+      "text": "Exactamente como de la parte reinante de ti mismo depende que tu vida sea desdichada, así también depende de ella ser feliz.",
+      "themes": ["mind", "wisdom"]
+    },
+    {
+      "id": 22,
+      "book": 5,
+      "chapter": 16,
+      "text": "Cuál es la índole del alma del hombre que a otros entristece y él mismo se contrista de todo.",
+      "themes": ["relationships", "mind"]
+    },
+    {
+      "id": 23,
+      "book": 5,
+      "chapter": 20,
+      "text": "En cierto modo, un hombre que peca, peca contra sí mismo; el que comete injusticia se daña a sí mismo haciéndose malo.",
+      "themes": ["virtue", "wisdom", "relationships"]
+    },
+    {
+      "id": 24,
+      "book": 5,
+      "chapter": 23,
+      "text": "Piensa frecuentemente en la conexión de todas las cosas del mundo y en su mutua relación. De alguna manera todas las cosas están entrelazadas unas con otras.",
+      "themes": ["nature", "wisdom"]
+    },
+    {
+      "id": 25,
+      "book": 6,
+      "chapter": 2,
+      "text": "Sea lo que fuere aquello que hagas, hazlo con precisión y exactitud; que no te importe el frío ni el calor, la somnolencia ni el insomnio, la censura ni la alabanza. Pues también esto es una de las acciones que componen la vida.",
+      "themes": ["duty", "adversity", "virtue"]
+    },
+    {
+      "id": 26,
+      "book": 6,
+      "chapter": 6,
+      "text": "La mejor venganza es no ser semejante al que te agravió.",
+      "themes": ["virtue", "relationships", "wisdom"]
+    },
+    {
+      "id": 27,
+      "book": 6,
+      "chapter": 15,
+      "text": "Algunas cosas se apresuran a existir, otras a dejar de existir; y de lo que llega a la existencia, una parte ya se ha extinguido. Flujos y alteraciones renuevan incesantemente el mundo.",
+      "themes": ["time", "nature", "death"]
+    },
+    {
+      "id": 28,
+      "book": 6,
+      "chapter": 21,
+      "text": "Si alguien puede refutarme y probarme que pienso o actúo erróneamente, con gusto cambiaré. Pues busco la verdad, por la que nadie jamás fue perjudicado.",
+      "themes": ["wisdom", "virtue", "mind"]
+    },
+    {
+      "id": 29,
+      "book": 6,
+      "chapter": 30,
+      "text": "Cuida de no cesarizarte, de no empaparte de púrpura. Suele pasar. Consérvate, pues, sencillo, bueno, puro, grave, sin afectación, amigo de la justicia, piadoso, benévolo, afable, firme en el cumplimiento del deber.",
+      "themes": ["virtue", "simplicity", "duty"]
+    },
+    {
+      "id": 30,
+      "book": 6,
+      "chapter": 44,
+      "text": "Quienquiera que seas, has surgido como parte del Todo. Desaparecerás en lo que te dio el ser; o, mejor dicho, serás recogido en su razón seminal mediante la transformación.",
+      "themes": ["death", "nature"]
+    },
+    {
+      "id": 31,
+      "book": 7,
+      "chapter": 2,
+      "text": "Que no importe a tu parte rectora el movimiento suave o violento de la carne, y que no se mezcle con él, sino que se circunscriba a sí misma.",
+      "themes": ["mind", "adversity"]
+    },
+    {
+      "id": 32,
+      "book": 7,
+      "chapter": 9,
+      "text": "Todas las cosas están entrelazadas entre sí; su encadenamiento es sagrado y casi ninguna es extraña a otra, pues han sido coordinadas y contribuyen al orden del mismo mundo.",
+      "themes": ["nature", "wisdom"]
+    },
+    {
+      "id": 33,
+      "book": 7,
+      "chapter": 14,
+      "text": "Que te sea indiferente el frío o el calor si cumples con tu deber, el sueño o el insomnio si actúas debidamente, la muerte o cualquier otra acción que parezca mala.",
+      "themes": ["duty", "adversity", "death"]
+    },
+    {
+      "id": 34,
+      "book": 7,
+      "chapter": 22,
+      "text": "Es propio del hombre amar incluso a los que tropiezan. Esto se logra si al mismo tiempo piensas que son de tu familia y que pecan por ignorancia e involuntariamente.",
+      "themes": ["relationships", "virtue", "wisdom"]
+    },
+    {
+      "id": 35,
+      "book": 7,
+      "chapter": 26,
+      "text": "Cuando alguien te falte al respeto, piensa al punto qué concepto tiene del bien y del mal. De este modo no te sorprenderás de que obre así y no te indignarás con él.",
+      "themes": ["relationships", "mind", "wisdom"]
+    },
+    {
+      "id": 36,
+      "book": 7,
+      "chapter": 59,
+      "text": "Profundiza en tu interior. En el interior está la fuente del bien, capaz de brotar sin cesar si no dejas de excavar.",
+      "themes": ["mind", "virtue", "wisdom"]
+    },
+    {
+      "id": 37,
+      "book": 8,
+      "chapter": 5,
+      "text": "El primer paso es no agitarte, pues todas las cosas ocurren según la naturaleza del universo. El segundo es concentrarte en lo que tienes delante.",
+      "themes": ["mind", "nature", "duty"]
+    },
+    {
+      "id": 38,
+      "book": 8,
+      "chapter": 16,
+      "text": "Recuerda que cambiar de opinión y seguir al que te corrige es igualmente compatible con la libertad.",
+      "themes": ["wisdom", "virtue", "mind"]
+    },
+    {
+      "id": 39,
+      "book": 8,
+      "chapter": 32,
+      "text": "Es preciso comprender la muerte con claridad y no llenarla de colorido imaginario. Quien ha visto el presente, lo ha visto todo: lo pasado y lo por venir.",
+      "themes": ["death", "time", "wisdom"]
+    },
+    {
+      "id": 40,
+      "book": 8,
+      "chapter": 47,
+      "text": "Si te aflige algo externo, no es eso lo que te importuna, sino el juicio que tú haces de ello. Borrar este juicio depende de ti.",
+      "themes": ["mind", "adversity", "wisdom"]
+    },
+    {
+      "id": 41,
+      "book": 8,
+      "chapter": 51,
+      "text": "No hay que preocuparse de las habladurías, sino únicamente de no hacer ni decir nada que merezca reproche.",
+      "themes": ["virtue", "relationships", "simplicity"]
+    },
+    {
+      "id": 42,
+      "book": 9,
+      "chapter": 3,
+      "text": "No desprecies la muerte; dale la bienvenida. Pues también ella es una de las cosas que la naturaleza quiere.",
+      "themes": ["death", "nature"]
+    },
+    {
+      "id": 43,
+      "book": 9,
+      "chapter": 6,
+      "text": "Basta que tu juicio actual sobre el presente sea objetivo, que tu acción presente sea social, que tu disposición actual se complazca en todo lo que proviene de la causa exterior.",
+      "themes": ["mind", "duty", "relationships"]
+    },
+    {
+      "id": 44,
+      "book": 9,
+      "chapter": 29,
+      "text": "Trabaja, pero no como desgraciado ni como quien quiere ser compadecido o admirado. Una sola cosa desea: actuar o descansar como exige la razón social.",
+      "themes": ["duty", "simplicity", "virtue"]
+    },
+    {
+      "id": 45,
+      "book": 9,
+      "chapter": 42,
+      "text": "Cuando te ofenda la maldad de alguien, pregúntate inmediatamente: ¿Es posible que en el mundo no existan hombres malos? No es posible. No pidas, pues, lo imposible.",
+      "themes": ["relationships", "wisdom", "mind"]
+    },
+    {
+      "id": 46,
+      "book": 10,
+      "chapter": 3,
+      "text": "Todo lo que te sucede, o estaba preparado para ti desde la eternidad, o el entrelazamiento de las causas lo ha tejido para ti desde el principio.",
+      "themes": ["nature", "adversity", "wisdom"]
+    },
+    {
+      "id": 47,
+      "book": 10,
+      "chapter": 8,
+      "text": "Cuando hayas adquirido los nombres de bueno, modesto, veraz, prudente, benévolo y magnánimo, cuida de no cambiarlos por otros.",
+      "themes": ["virtue", "wisdom"]
+    },
+    {
+      "id": 48,
+      "book": 10,
+      "chapter": 16,
+      "text": "No discutas más sobre cómo debe ser el hombre bueno. Sé uno.",
+      "themes": ["virtue", "simplicity", "duty"]
+    },
+    {
+      "id": 49,
+      "book": 10,
+      "chapter": 31,
+      "text": "¿Cuándo tendrás el alma sencilla, desnuda, más visible que el cuerpo que la envuelve? ¿Cuándo gustarás de la disposición de amar y estimar a todos?",
+      "themes": ["simplicity", "relationships", "mind"]
+    },
+    {
+      "id": 50,
+      "book": 10,
+      "chapter": 34,
+      "text": "El que huye de su amo es un esclavo fugitivo. Nuestra ama es la ley, y el que la transgrede es un fugitivo. Igualmente, el afligido, el airado, el temeroso, no quieren que algo haya sucedido, suceda o vaya a suceder de lo ordenado por el que gobierna todo.",
+      "themes": ["nature", "wisdom", "duty"]
+    },
+    {
+      "id": 51,
+      "book": 11,
+      "chapter": 1,
+      "text": "Las propiedades del alma racional son: verse a sí misma, analizarse, transformarse como quiere, recoger ella misma el fruto que produce, y alcanzar su fin propio.",
+      "themes": ["mind", "wisdom"]
+    },
+    {
+      "id": 52,
+      "book": 11,
+      "chapter": 4,
+      "text": "¿He hecho algo útil a la comunidad? Me he beneficiado, pues. Ten siempre a mano esta reflexión y no cejes nunca.",
+      "themes": ["duty", "relationships", "virtue"]
+    },
+    {
+      "id": 53,
+      "book": 11,
+      "chapter": 9,
+      "text": "Muchos granos de incienso hay sobre el mismo altar: uno cayó antes, otro después; pero no hay diferencia.",
+      "themes": ["death", "time", "simplicity"]
+    },
+    {
+      "id": 54,
+      "book": 11,
+      "chapter": 15,
+      "text": "El hombre de bien no se irrita por las faltas de los demás. Su deber es corregir a quien se equivoca. Si no puede, corregirse a sí mismo.",
+      "themes": ["virtue", "relationships", "duty"]
+    },
+    {
+      "id": 55,
+      "book": 11,
+      "chapter": 18,
+      "text": "Primero, no hagas nada al azar ni sin un fin. Segundo, no dirijas tus actos a otro fin que no sea el bien común.",
+      "themes": ["duty", "virtue", "wisdom"]
+    },
+    {
+      "id": 56,
+      "book": 12,
+      "chapter": 1,
+      "text": "Todas esas cosas que esperas alcanzar dando rodeos, puedes tenerlas ahora mismo si no te las niegas a ti mismo.",
+      "themes": ["wisdom", "time", "simplicity"]
+    },
+    {
+      "id": 57,
+      "book": 12,
+      "chapter": 3,
+      "text": "Tres cosas integran tu ser: cuerpo, hálito vital, inteligencia. De estas, las dos primeras te pertenecen en la medida en que debes cuidarlas; solo la tercera es propiamente tuya.",
+      "themes": ["mind", "nature", "wisdom"]
+    },
+    {
+      "id": 58,
+      "book": 12,
+      "chapter": 17,
+      "text": "Si no conviene, no lo hagas; si no es verdad, no lo digas. Que tu impulso sea siempre tuyo.",
+      "themes": ["virtue", "simplicity", "mind"]
+    },
+    {
+      "id": 59,
+      "book": 12,
+      "chapter": 21,
+      "text": "Pronto habrás olvidado todo; pronto todos te habrán olvidado.",
+      "themes": ["death", "time"]
+    },
+    {
+      "id": 60,
+      "book": 12,
+      "chapter": 26,
+      "text": "Cuando te moleste la conducta de alguien, vuélvete inmediatamente hacia ti mismo y examina si tú mismo cometes una falta semejante.",
+      "themes": ["relationships", "virtue", "mind"]
+    },
+    {
+      "id": 61,
+      "book": 4,
+      "chapter": 41,
+      "text": "Eres una pequeña alma que sustenta un cadáver, como decía Epicteto.",
+      "themes": ["death", "nature", "simplicity"]
+    },
+    {
+      "id": 62,
+      "book": 5,
+      "chapter": 33,
+      "text": "Pronto no serás nadie en ninguna parte, ni existirá ninguna de las cosas que ahora ves, ni ninguno de los que ahora viven. Pues todo está destinado por naturaleza a la transformación, al cambio y a la destrucción.",
+      "themes": ["death", "time", "nature"]
+    },
+    {
+      "id": 63,
+      "book": 6,
+      "chapter": 36,
+      "text": "Asia, Europa son rincones del universo; el mar entero, una gota del universo; el Atos, un terrón del universo; todo el tiempo presente, un instante de la eternidad.",
+      "themes": ["time", "nature", "simplicity"]
+    },
+    {
+      "id": 64,
+      "book": 7,
+      "chapter": 47,
+      "text": "Observa el curso de las estrellas como si giraras con ellas, y medita sin cesar en las transformaciones de los elementos. Tales pensamientos purifican de la suciedad de la vida terrena.",
+      "themes": ["nature", "mind", "wisdom"]
+    },
+    {
+      "id": 65,
+      "book": 8,
+      "chapter": 36,
+      "text": "No te turbes por la representación de toda tu vida. No pienses de golpe en las posibles penas que probablemente te aguardan, sino que en cada ocasión pregúntate: ¿Qué hay de insoportable e intolerable en esto?",
+      "themes": ["adversity", "mind", "time"]
+    },
+    {
+      "id": 66,
+      "book": 9,
+      "chapter": 32,
+      "text": "Puedes prescindir de muchas cosas superfluas que te causan molestias y que radican enteramente en tu opinión.",
+      "themes": ["simplicity", "mind"]
+    },
+    {
+      "id": 67,
+      "book": 10,
+      "chapter": 6,
+      "text": "Que te gobierne la justicia, ya actúes, ya hables, ya calles. En toda ocasión piensa que la salida de la vida es inminente.",
+      "themes": ["virtue", "death", "duty"]
+    },
+    {
+      "id": 68,
+      "book": 3,
+      "chapter": 5,
+      "text": "No actúes como si fueras a vivir miles de años. La muerte se cierne sobre ti. Mientras vivas, mientras puedas, sé bueno.",
+      "themes": ["death", "virtue", "time"]
+    },
+    {
+      "id": 69,
+      "book": 4,
+      "chapter": 36,
+      "text": "Observa constantemente que todas las cosas nacen de la transformación y habitúate a pensar que a la naturaleza del Todo nada le agrada tanto como transformar las cosas que existen y crear otras nuevas semejantes.",
+      "themes": ["nature", "time", "wisdom"]
+    },
+    {
+      "id": 70,
+      "book": 8,
+      "chapter": 17,
+      "text": "Lo que no daña a la ciudad no daña tampoco al ciudadano. Ante toda apariencia de daño, aplica esta regla: si la ciudad no es dañada por ello, tampoco yo he sido dañado.",
+      "themes": ["relationships", "duty", "wisdom"]
+    },
+    {
+      "id": 71,
+      "book": 2,
+      "chapter": 12,
+      "text": "Por más que vayas a vivir tres mil años o tres millones, recuerda que nadie pierde otra vida sino la que vive, ni vive otra sino la que pierde. Así la más larga viene a ser igual que la más corta.",
+      "themes": ["time", "death", "wisdom"]
+    },
+    {
+      "id": 72,
+      "book": 4,
+      "chapter": 21,
+      "text": "Si las almas perduran, ¿cómo las contiene el aire desde la eternidad? ¿Y cómo la tierra contiene los cuerpos de los enterrados desde tanto tiempo?",
+      "themes": ["death", "nature"]
+    },
+    {
+      "id": 73,
+      "book": 5,
+      "chapter": 9,
+      "text": "No te hagas violencia a ti mismo, pues no tendrás tiempo de hacerlo. Y no mires tanto a las faltas del prójimo; mejor es que cada cual mire las suyas propias.",
+      "themes": ["mind", "relationships", "virtue"]
+    },
+    {
+      "id": 74,
+      "book": 6,
+      "chapter": 48,
+      "text": "Cuando quieras alegrarte, piensa en las excelencias de los que viven contigo: la energía de uno, la modestia de otro, la liberalidad de un tercero y alguna otra cualidad de otro.",
+      "themes": ["relationships", "virtue", "mind"]
+    },
+    {
+      "id": 75,
+      "book": 7,
+      "chapter": 69,
+      "text": "La perfección del carácter consiste en vivir cada día como si fuera el último, sin agitación, sin apatía y sin hipocresía.",
+      "themes": ["virtue", "death", "time"]
+    },
+    {
+      "id": 76,
+      "book": 8,
+      "chapter": 59,
+      "text": "Los hombres han nacido los unos para los otros; instrúyelos o sopórtalos.",
+      "themes": ["relationships", "duty", "wisdom"]
+    },
+    {
+      "id": 77,
+      "book": 9,
+      "chapter": 4,
+      "text": "El que obra injustamente comete impiedad. Pues la naturaleza del universo ha hecho a los seres racionales los unos para los otros, de modo que se ayuden mutuamente según su mérito y de ningún modo se perjudiquen.",
+      "themes": ["relationships", "virtue", "nature"]
+    },
+    {
+      "id": 78,
+      "book": 10,
+      "chapter": 36,
+      "text": "Nadie es tan afortunado que, al morir, no tenga junto a sí a alguien que aplauda el mal que le sobreviene.",
+      "themes": ["death", "relationships"]
+    },
+    {
+      "id": 79,
+      "book": 11,
+      "chapter": 3,
+      "text": "¡Qué alma la que está dispuesta, si es preciso desprenderse ya del cuerpo, a extinguirse, a dispersarse o a perdurar! Pero esa disposición ha de proceder de una decisión personal, no de mera oposición como la de los cristianos, sino reflexiva, digna, y sin dramatismo, de modo que persuada a otro.",
+      "themes": ["death", "mind", "wisdom"]
+    },
+    {
+      "id": 80,
+      "book": 12,
+      "chapter": 36,
+      "text": "Hombre, has sido ciudadano de esta gran ciudad. ¿Qué te importa si cinco años o cien? Lo conforme a las leyes es igual para todos. ¿Qué hay de terrible en ser expulsado de la ciudad no por un tirano o un juez injusto, sino por la misma naturaleza que te introdujo?",
+      "themes": ["death", "nature", "duty"]
+    }
+  ]
+}
