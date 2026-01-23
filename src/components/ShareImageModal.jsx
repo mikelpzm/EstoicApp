@@ -2,12 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { generateQuoteImage } from '../services/geminiService';
 import './ShareImageModal.css';
 
-function ShareImageModal({ meditation, apiKey, onClose }) {
-  const [imageUrl, setImageUrl] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+function ShareImageModal({ meditation, apiKey, onClose, existingImage, onImageGenerated }) {
+  const [imageUrl, setImageUrl] = useState(existingImage || null);
+  const [isLoading, setIsLoading] = useState(!existingImage);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    // Si ya tenemos una imagen, no generamos una nueva
+    if (existingImage) {
+      setImageUrl(existingImage);
+      setIsLoading(false);
+      return;
+    }
+
     let isMounted = true;
 
     async function generate() {
@@ -17,6 +24,10 @@ function ShareImageModal({ meditation, apiKey, onClose }) {
         const url = await generateQuoteImage(apiKey, meditation);
         if (isMounted) {
           setImageUrl(url);
+          // Notificar al padre de la nueva imagen generada
+          if (onImageGenerated) {
+            onImageGenerated(url);
+          }
         }
       } catch (err) {
         if (isMounted) {
@@ -34,7 +45,7 @@ function ShareImageModal({ meditation, apiKey, onClose }) {
     return () => {
       isMounted = false;
     };
-  }, [meditation, apiKey]);
+  }, [meditation, apiKey, existingImage, onImageGenerated]);
 
   const handleDownload = () => {
     if (!imageUrl) return;
@@ -90,6 +101,10 @@ function ShareImageModal({ meditation, apiKey, onClose }) {
       .then(url => {
         setImageUrl(url);
         setIsLoading(false);
+        // Notificar al padre de la nueva imagen generada
+        if (onImageGenerated) {
+          onImageGenerated(url);
+        }
       })
       .catch(err => {
         setError(err.message || 'Error al generar la imagen');

@@ -7,6 +7,8 @@ import MeditationList from './components/MeditationList';
 import MeditationCard from './components/MeditationCard';
 import NotificationSettings from './components/NotificationSettings';
 import ImageSettings from './components/ImageSettings';
+import ImageGenerator from './components/ImageGenerator';
+import ShareImageModal from './components/ShareImageModal';
 import useImageGeneration from './hooks/useImageGeneration';
 import data from './data/meditations.json';
 import './App.css';
@@ -17,6 +19,8 @@ function App() {
   const [selectedTheme, setSelectedTheme] = useState(null);
   const [selectedBook, setSelectedBook] = useState(null);
   const [randomMeditation, setRandomMeditation] = useState(null);
+  const [randomGeneratedImage, setRandomGeneratedImage] = useState(null);
+  const [showRandomShareModal, setShowRandomShareModal] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showImageSettings, setShowImageSettings] = useState(false);
 
@@ -65,12 +69,14 @@ function App() {
   const handleRandomMeditation = useCallback(() => {
     const randomIndex = Math.floor(Math.random() * meditations.length);
     setRandomMeditation(meditations[randomIndex]);
+    setRandomGeneratedImage(null);
     setView('random');
   }, [meditations]);
 
   const handleAnotherRandom = () => {
     const randomIndex = Math.floor(Math.random() * meditations.length);
     setRandomMeditation(meditations[randomIndex]);
+    setRandomGeneratedImage(null);
   };
 
   // Filtrar meditaciones según el filtro activo
@@ -112,21 +118,65 @@ function App() {
             </div>
 
             {randomMeditation && (
-              <MeditationCard
-                meditation={randomMeditation}
-                themes={themes}
-                isDaily={false}
-              />
+              <>
+                <MeditationCard
+                  meditation={randomMeditation}
+                  themes={themes}
+                  isDaily={false}
+                />
+
+                {imageSettings.enabled && imageSettings.apiKey && (
+                  <ImageGenerator
+                    meditation={randomMeditation}
+                    apiKey={imageSettings.apiKey}
+                    generatedImage={randomGeneratedImage}
+                    onImageGenerated={setRandomGeneratedImage}
+                  />
+                )}
+              </>
             )}
 
             <div className="daily-actions">
               <button className="action-btn" onClick={handleAnotherRandom}>
                 <span>🎲</span> Otra aleatoria
               </button>
+              {imageSettings.enabled && imageSettings.apiKey ? (
+                <button className="action-btn share" onClick={() => setShowRandomShareModal(true)}>
+                  <span>🖼️</span> Compartir con imagen
+                </button>
+              ) : (
+                <button className="action-btn" onClick={() => {
+                  if (navigator.share) {
+                    navigator.share({
+                      title: 'Meditación de Marco Aurelio',
+                      text: `"${randomMeditation.text}" — Marco Aurelio, Libro ${randomMeditation.book}`,
+                    });
+                  } else {
+                    navigator.clipboard.writeText(`"${randomMeditation.text}" — Marco Aurelio, Libro ${randomMeditation.book}`);
+                    alert('Meditación copiada al portapapeles');
+                  }
+                }}>
+                  <span>📤</span> Compartir
+                </button>
+              )}
               <button className="action-btn" onClick={handleShowAll}>
                 <span>📚</span> Explorar todas
               </button>
             </div>
+
+            {showRandomShareModal && randomMeditation && (
+              <div className="modal-overlay" onClick={() => setShowRandomShareModal(false)}>
+                <div onClick={(e) => e.stopPropagation()}>
+                  <ShareImageModal
+                    meditation={randomMeditation}
+                    apiKey={imageSettings.apiKey}
+                    onClose={() => setShowRandomShareModal(false)}
+                    existingImage={randomGeneratedImage}
+                    onImageGenerated={setRandomGeneratedImage}
+                  />
+                </div>
+              </div>
+            )}
           </section>
         ) : (
           <>
