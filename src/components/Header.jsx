@@ -12,15 +12,15 @@ export default function Header({ onShowDaily, onShowAll, onRandom, onNotificatio
         <nav className="nav">
           <button onClick={onShowDaily} className="nav-btn">
             <span className="nav-icon">☀️</span>
-            Hoy
+            <span className="btn-text">Hoy</span>
           </button>
           <button onClick={onRandom} className="nav-btn">
             <span className="nav-icon">🎲</span>
-            Aleatoria
+            <span className="btn-text">Aleatoria</span>
           </button>
           <button onClick={onShowAll} className="nav-btn">
             <span className="nav-icon">📚</span>
-            Explorar
+            <span className="btn-text">Explorar</span>
           </button>
           <button onClick={onImageSettings} className={`nav-btn nav-btn-notification ${isImageGenerationEnabled ? 'active' : ''}`} title="Configurar generación de imágenes">
             <span className="nav-icon">🖼️</span>
