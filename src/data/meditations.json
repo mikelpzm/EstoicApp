@@ -54,6 +54,80 @@
       "icon": "📜"
     }
   ],
+  "bookContexts": {
+    "1": {
+      "title": "Deudas y gratitudes",
+      "period": "Reflexión tardía (c. 175-180 d.C.)",
+      "location": "Probablemente Roma o Vindobona",
+      "context": "El Libro I es único en las Meditaciones: Marco Aurelio enumera a las personas que influyeron en su formación y qué aprendió de cada una. Desde su abuelo Vero hasta el emperador Antonino Pío, pasando por sus maestros de retórica y filosofía. Fue probablemente el último libro escrito, una reflexión al final de su vida sobre las deudas de gratitud acumuladas."
+    },
+    "2": {
+      "title": "En la frontera del Danubio",
+      "period": "Guerras marcomanas (c. 172-175 d.C.)",
+      "location": "Carnuntum (actual Austria)",
+      "context": "Escrito en el campamento militar de Carnuntum, mientras Marco Aurelio lideraba personalmente la defensa contra las tribus germánicas. En medio de la guerra, la peste y lejos de Roma, el emperador reflexiona sobre la brevedad de la vida y la importancia de actuar con virtud independientemente de las circunstancias externas."
+    },
+    "3": {
+      "title": "Reflexiones en campaña",
+      "period": "Guerras marcomanas (c. 172-175 d.C.)",
+      "location": "Carnuntum (actual Austria)",
+      "context": "Continuación de las reflexiones iniciadas en el Libro II. Marco Aurelio profundiza en la naturaleza efímera de la fama y el poder, recordándose que incluso los emperadores más célebres han sido olvidados. La cercanía de la muerte en el campo de batalla agudiza su perspectiva estoica."
+    },
+    "4": {
+      "title": "El retiro interior",
+      "period": "Guerras marcomanas (c. 172-175 d.C.)",
+      "location": "Diversos campamentos en el Danubio",
+      "context": "En este libro desarrolla una de sus ideas más características: el retiro interior. Sin poder alejarse físicamente de sus obligaciones como emperador y general, Marco Aurelio encuentra refugio en su propia mente. Introduce la metáfora de la ciudadela interior que ninguna circunstancia externa puede conquistar."
+    },
+    "5": {
+      "title": "El deber del amanecer",
+      "period": "Guerras marcomanas (c. 173-175 d.C.)",
+      "location": "Campamentos del Danubio",
+      "context": "Famoso por su apertura sobre la dificultad de levantarse por las mañanas, este libro refleja el agotamiento del emperador tras años de campaña. Sin embargo, insiste en que el deber llama: nacimos para trabajar juntos, como las filas de dientes o las manos. La fatiga no es excusa para abandonar nuestras obligaciones."
+    },
+    "6": {
+      "title": "La naturaleza del universo",
+      "period": "Guerras marcomanas (c. 174-175 d.C.)",
+      "location": "Campamentos del Danubio",
+      "context": "Marco Aurelio explora la física estoica: todo está interconectado, todo cambia, todo retorna a la naturaleza universal. El emperador, rodeado de muerte en la guerra y la peste antonina que diezmaba su ejército, busca consuelo en la visión cósmica del estoicismo."
+    },
+    "7": {
+      "title": "Dolor y resistencia",
+      "period": "Guerras marcomanas (c. 175-177 d.C.)",
+      "location": "Diversos campamentos militares",
+      "context": "Este libro parece escrito durante un período de particular dificultad. Marco Aurelio había enfrentado la rebelión de Avidio Casio en Oriente y posiblemente la muerte de su esposa Faustina. Las reflexiones sobre el dolor, la pérdida y la importancia de mantener la ecuanimidad son especialmente intensas."
+    },
+    "8": {
+      "title": "La comunidad racional",
+      "period": "Segunda campaña del Danubio (c. 177-178 d.C.)",
+      "location": "Vindobona (actual Viena)",
+      "context": "Tras un breve regreso a Roma, Marco Aurelio vuelve al frente. En este libro enfatiza nuestra conexión con todos los seres racionales y el deber de trabajar por el bien común. Como emperador, esta no era filosofía abstracta sino guía práctica para gobernar un imperio diverso."
+    },
+    "9": {
+      "title": "Injusticia y respuesta",
+      "period": "Segunda campaña del Danubio (c. 178-179 d.C.)",
+      "location": "Vindobona y Sirmium",
+      "context": "Marco Aurelio reflexiona extensamente sobre cómo responder a quienes nos hacen daño. El emperador, que había perdonado a los seguidores del rebelde Casio, practica lo que predica: la injusticia de otros no justifica nuestra propia falta de virtud."
+    },
+    "10": {
+      "title": "Aceptación y acción",
+      "period": "Segunda campaña del Danubio (c. 179 d.C.)",
+      "location": "Vindobona",
+      "context": "Uno de los libros más maduros filosóficamente. Marco Aurelio integra la aceptación estoica del destino con la necesidad de actuar virtuosamente. No podemos controlar lo que nos sucede, pero sí cómo respondemos. El emperador, ya enfermo, se prepara para lo inevitable mientras cumple su deber."
+    },
+    "11": {
+      "title": "El alma racional",
+      "period": "Últimos años (c. 179-180 d.C.)",
+      "location": "Vindobona",
+      "context": "Las reflexiones se vuelven más introspectivas. Marco Aurelio examina las características del alma racional y cómo mantenerla pura. Hay una urgencia en estas páginas: el emperador sabe que le queda poco tiempo y quiere dejar claros los principios que han guiado su vida."
+    },
+    "12": {
+      "title": "Preparación para el final",
+      "period": "Últimos meses (c. 180 d.C.)",
+      "location": "Vindobona",
+      "context": "El último libro, escrito poco antes de su muerte el 17 de marzo de 180 d.C. Marco Aurelio, a los 58 años, enfrentaba el final con la serenidad que había cultivado toda su vida. Sus últimas reflexiones recapitulan los temas centrales: la muerte como proceso natural, la importancia de vivir el presente, y la paz que viene de alinear nuestra voluntad con la naturaleza del universo."
+    }
+  },
   "meditations": [
     {
       "id": 1,

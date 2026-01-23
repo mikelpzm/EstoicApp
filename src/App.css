@@ -784,3 +784,135 @@ body {
   --font-display: var(--font-serif);
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
+
+/* Book Context */
+.book-context {
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+  padding-top: 1rem;
+}
+
+.book-context-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+  text-align: left;
+  transition: color 0.2s ease;
+}
+
+.book-context-toggle:hover {
+  color: var(--color-gold);
+}
+
+.book-context.expanded .book-context-toggle {
+  color: var(--color-gold);
+}
+
+.book-context-icon {
+  font-size: 1.1rem;
+}
+
+.book-context-title {
+  flex: 1;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+}
+
+.book-context-arrow {
+  font-size: 0.7rem;
+  transition: transform 0.3s ease;
+}
+
+.book-context-arrow.rotated {
+  transform: rotate(180deg);
+}
+
+.book-context-content {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.book-context-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.book-context-period,
+.book-context-location {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.book-context-period strong,
+.book-context-location strong {
+  color: var(--color-gold);
+  font-weight: 500;
+}
+
+.book-context-text {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--color-text);
+}
+
+/* Responsive Book Context */
+@media (max-width: 768px) {
+  .book-context-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .book-context-content {
+    padding: 0.75rem;
+  }
+
+  .book-context-text {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .book-context-toggle {
+    font-size: 0.85rem;
+  }
+
+  .book-context-title {
+    font-size: 0.9rem;
+  }
+
+  .book-context-period,
+  .book-context-location {
+    font-size: 0.8rem;
+  }
+
+  .book-context-text {
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+}

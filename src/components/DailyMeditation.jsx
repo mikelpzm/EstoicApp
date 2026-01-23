@@ -21,7 +21,7 @@ function getDailyMeditation(meditations) {
   return meditations[index];
 }
 
-export default function DailyMeditation({ meditations, themes, imageSettings }) {
+export default function DailyMeditation({ meditations, themes, bookContexts, imageSettings }) {
   const [dailyMeditation, setDailyMeditation] = useState(null);
   const [fadeIn, setFadeIn] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
@@ -53,6 +53,7 @@ export default function DailyMeditation({ meditations, themes, imageSettings }) 
       <MeditationCard
         meditation={dailyMeditation}
         themes={themes}
+        bookContexts={bookContexts}
         isDaily={true}
       />
 
