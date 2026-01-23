@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import MeditationCard from './MeditationCard';
 import ShareImageModal from './ShareImageModal';
+import ImageGenerator from './ImageGenerator';
 
 function getDailyMeditation(meditations) {
   // Usar la fecha actual como semilla para obtener una meditación "aleatoria" pero consistente durante el día
@@ -24,6 +25,7 @@ export default function DailyMeditation({ meditations, themes, imageSettings }) 
   const [dailyMeditation, setDailyMeditation] = useState(null);
   const [fadeIn, setFadeIn] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
+  const [generatedImage, setGeneratedImage] = useState(null);
 
   const isImageGenerationEnabled = imageSettings?.enabled && imageSettings?.apiKey;
 
@@ -54,6 +56,15 @@ export default function DailyMeditation({ meditations, themes, imageSettings }) 
         isDaily={true}
       />
 
+      {isImageGenerationEnabled && (
+        <ImageGenerator
+          meditation={dailyMeditation}
+          apiKey={imageSettings.apiKey}
+          generatedImage={generatedImage}
+          onImageGenerated={setGeneratedImage}
+        />
+      )}
+
       <div className="daily-actions">
         <button className="action-btn share" onClick={() => {
           if (isImageGenerationEnabled) {
@@ -80,6 +91,8 @@ export default function DailyMeditation({ meditations, themes, imageSettings }) 
               meditation={dailyMeditation}
               apiKey={imageSettings.apiKey}
               onClose={() => setShowShareModal(false)}
+              existingImage={generatedImage}
+              onImageGenerated={setGeneratedImage}
             />
           </div>
         </div>
