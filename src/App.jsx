@@ -31,7 +31,7 @@ function App() {
     clearApiKey
   } = useImageGeneration();
 
-  const { meditations, themes } = data;
+  const { meditations, themes, bookContexts } = data;
 
   const meditationCounts = useMemo(() => {
     const counts = { total: meditations.length };
@@ -106,6 +106,7 @@ function App() {
           <DailyMeditation
             meditations={meditations}
             themes={themes}
+            bookContexts={bookContexts}
             imageSettings={imageSettings}
           />
         ) : view === 'random' ? (
@@ -122,7 +123,9 @@ function App() {
                 <MeditationCard
                   meditation={randomMeditation}
                   themes={themes}
+                  bookContexts={bookContexts}
                   isDaily={false}
+                  showContext={true}
                 />
 
                 {imageSettings.enabled && imageSettings.apiKey && (

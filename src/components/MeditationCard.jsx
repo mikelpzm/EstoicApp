@@ -1,6 +1,7 @@
 import React from 'react';
+import BookContext from './BookContext';
 
-export default function MeditationCard({ meditation, themes, isDaily = false }) {
+export default function MeditationCard({ meditation, themes, bookContexts, isDaily = false, showContext = false }) {
   const meditationThemes = themes.filter(t => meditation.themes.includes(t.id));
 
   return (
@@ -28,6 +29,13 @@ export default function MeditationCard({ meditation, themes, isDaily = false }) 
           ))}
         </div>
       </footer>
+
+      {(isDaily || showContext) && bookContexts && (
+        <BookContext
+          bookNumber={meditation.book}
+          bookContexts={bookContexts}
+        />
+      )}
     </article>
   );
 }
