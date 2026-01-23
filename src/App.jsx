@@ -6,6 +6,8 @@ import BookFilter from './components/BookFilter';
 import MeditationList from './components/MeditationList';
 import MeditationCard from './components/MeditationCard';
 import NotificationSettings from './components/NotificationSettings';
+import ImageSettings from './components/ImageSettings';
+import useImageGeneration from './hooks/useImageGeneration';
 import data from './data/meditations.json';
 import './App.css';
 
@@ -16,6 +18,14 @@ function App() {
   const [selectedBook, setSelectedBook] = useState(null);
   const [randomMeditation, setRandomMeditation] = useState(null);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [showImageSettings, setShowImageSettings] = useState(false);
+
+  const {
+    settings: imageSettings,
+    toggleEnabled: toggleImageEnabled,
+    setApiKey,
+    clearApiKey
+  } = useImageGeneration();
 
   const { meditations, themes } = data;
 
@@ -81,6 +91,8 @@ function App() {
         onShowAll={handleShowAll}
         onRandom={handleRandomMeditation}
         onNotifications={() => setShowNotifications(true)}
+        onImageSettings={() => setShowImageSettings(true)}
+        isImageGenerationEnabled={imageSettings.enabled && imageSettings.apiKey}
       />
 
       <main className="main-content">
@@ -88,7 +100,7 @@ function App() {
           <DailyMeditation
             meditations={meditations}
             themes={themes}
-            onRandom={handleRandomMeditation}
+            imageSettings={imageSettings}
           />
         ) : view === 'random' ? (
           <section className="random-section fade-in">
@@ -177,6 +189,20 @@ function App() {
         <div className="modal-overlay" onClick={() => setShowNotifications(false)}>
           <div onClick={(e) => e.stopPropagation()}>
             <NotificationSettings onClose={() => setShowNotifications(false)} />
+          </div>
+        </div>
+      )}
+
+      {showImageSettings && (
+        <div className="modal-overlay" onClick={() => setShowImageSettings(false)}>
+          <div onClick={(e) => e.stopPropagation()}>
+            <ImageSettings
+              settings={imageSettings}
+              onToggleEnabled={toggleImageEnabled}
+              onSetApiKey={setApiKey}
+              onClearApiKey={clearApiKey}
+              onClose={() => setShowImageSettings(false)}
+            />
           </div>
         </div>
       )}
