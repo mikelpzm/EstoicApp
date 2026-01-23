@@ -1,5 +1,5 @@
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models';
-const IMAGE_MODEL = 'gemini-2.0-flash-exp-image-generation';
+const IMAGE_MODEL = 'gemini-2.0-flash-exp';
 
 /**
  * Genera una imagen basada en una cita de Marco Aurelio
