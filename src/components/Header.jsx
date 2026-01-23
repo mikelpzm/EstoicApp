@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Header({ onShowDaily, onShowAll, onRandom, onNotifications }) {
+export default function Header({ onShowDaily, onShowAll, onRandom, onNotifications, onImageSettings, isImageGenerationEnabled }) {
   return (
     <header className="header">
       <div className="header-content">
@@ -21,6 +21,9 @@ export default function Header({ onShowDaily, onShowAll, onRandom, onNotificatio
           <button onClick={onShowAll} className="nav-btn">
             <span className="nav-icon">📚</span>
             Explorar
+          </button>
+          <button onClick={onImageSettings} className={`nav-btn nav-btn-notification ${isImageGenerationEnabled ? 'active' : ''}`} title="Configurar generación de imágenes">
+            <span className="nav-icon">🖼️</span>
           </button>
           <button onClick={onNotifications} className="nav-btn nav-btn-notification" title="Configurar notificaciones">
             <span className="nav-icon">🔔</span>

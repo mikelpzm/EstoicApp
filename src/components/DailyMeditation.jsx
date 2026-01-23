@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MeditationCard from './MeditationCard';
+import ShareImageModal from './ShareImageModal';
 
 function getDailyMeditation(meditations) {
   // Usar la fecha actual como semilla para obtener una meditación "aleatoria" pero consistente durante el día
@@ -19,9 +20,12 @@ function getDailyMeditation(meditations) {
   return meditations[index];
 }
 
-export default function DailyMeditation({ meditations, themes }) {
+export default function DailyMeditation({ meditations, themes, imageSettings }) {
   const [dailyMeditation, setDailyMeditation] = useState(null);
   const [fadeIn, setFadeIn] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
+
+  const isImageGenerationEnabled = imageSettings?.enabled && imageSettings?.apiKey;
 
   useEffect(() => {
     const meditation = getDailyMeditation(meditations);
@@ -52,7 +56,9 @@ export default function DailyMeditation({ meditations, themes }) {
 
       <div className="daily-actions">
         <button className="action-btn share" onClick={() => {
-          if (navigator.share) {
+          if (isImageGenerationEnabled) {
+            setShowShareModal(true);
+          } else if (navigator.share) {
             navigator.share({
               title: 'Meditación de Marco Aurelio',
               text: `"${dailyMeditation.text}" — Marco Aurelio, Libro ${dailyMeditation.book}`,
@@ -62,9 +68,22 @@ export default function DailyMeditation({ meditations, themes }) {
             alert('Meditación copiada al portapapeles');
           }
         }}>
-          <span>📤</span> Compartir
+          <span>{isImageGenerationEnabled ? '🖼️' : '📤'}</span>
+          {isImageGenerationEnabled ? 'Compartir con imagen' : 'Compartir'}
         </button>
       </div>
+
+      {showShareModal && dailyMeditation && (
+        <div className="modal-overlay" onClick={() => setShowShareModal(false)}>
+          <div onClick={(e) => e.stopPropagation()}>
+            <ShareImageModal
+              meditation={dailyMeditation}
+              apiKey={imageSettings.apiKey}
+              onClose={() => setShowShareModal(false)}
+            />
+          </div>
+        </div>
+      )}
     </section>
   );
 }
