@@ -1,20 +1,69 @@
-import React from 'react';
+import React, { useState } from 'react';
 import BookContext from './BookContext';
+import { buildStoicInsight, cleanMeditationText } from '../utils/stoicLens';
 
-export default function MeditationCard({ meditation, themes, bookContexts, isDaily = false, showContext = false }) {
+export default function MeditationCard({
+  meditation,
+  themes,
+  bookContexts,
+  isDaily = false,
+  showContext = false,
+  isFavorite = false,
+  isRead = false,
+  onToggleFavorite,
+  onToggleRead
+}) {
+  const [expanded, setExpanded] = useState(isDaily);
+  const [fullTextOpen, setFullTextOpen] = useState(isDaily);
   const meditationThemes = themes.filter(t => meditation.themes.includes(t.id));
+  const displayText = cleanMeditationText(meditation.text);
+  const insight = buildStoicInsight(meditation);
+
+  const shareText = `"${displayText}" — Marco Aurelio, Libro ${meditation.book}, ${meditation.chapter}`;
+  const shouldClampText = !isDaily && displayText.length > 760;
+  const visibleText = shouldClampText && !fullTextOpen ? `${displayText.slice(0, 720).trim()}…` : displayText;
+
+  const handleCopy = async () => {
+    if (navigator.share) {
+      await navigator.share({ title: 'Meditación de Marco Aurelio', text: shareText });
+      return;
+    }
+    await navigator.clipboard.writeText(shareText);
+  };
 
   return (
-    <article className={`meditation-card ${isDaily ? 'daily' : ''}`}>
-      {isDaily && (
-        <div className="daily-badge">
-          <span>☀️</span> Meditación del día
+    <article className={`meditation-card ${isDaily ? 'daily' : ''} ${isRead ? 'is-read' : ''}`}>
+      <div className="card-topline">
+        {isDaily ? (
+          <div className="daily-badge">
+            <span>☀️</span> Meditación del día
+          </div>
+        ) : (
+          <span className="reading-badge">Lectura estoica</span>
+        )}
+        <div className="card-actions-inline">
+          {onToggleRead && (
+            <button className="icon-action" onClick={() => onToggleRead(meditation.id)} title={isRead ? 'Marcar como pendiente' : 'Marcar como leído'}>
+              {isRead ? '✓' : '○'}
+            </button>
+          )}
+          {onToggleFavorite && (
+            <button className="icon-action" onClick={() => onToggleFavorite(meditation.id)} title={isFavorite ? 'Quitar de favoritos' : 'Guardar como favorito'}>
+              {isFavorite ? '★' : '☆'}
+            </button>
+          )}
         </div>
-      )}
+      </div>
 
       <blockquote className="meditation-text">
-        "{meditation.text}"
+        "{visibleText}"
       </blockquote>
+
+      {shouldClampText && (
+        <button className="text-expand-btn" onClick={() => setFullTextOpen(open => !open)}>
+          {fullTextOpen ? 'Contraer pasaje' : 'Leer pasaje completo'}
+        </button>
+      )}
 
       <footer className="meditation-footer">
         <cite className="meditation-source">
@@ -29,6 +78,44 @@ export default function MeditationCard({ meditation, themes, bookContexts, isDai
           ))}
         </div>
       </footer>
+
+      <section className="stoic-lens" aria-label="Lectura estoica del pasaje">
+        <button className="stoic-lens-toggle" onClick={() => setExpanded(!expanded)}>
+          <span>✦ Profundizar</span>
+          <span className={expanded ? 'rotated' : ''}>⌄</span>
+        </button>
+
+        {expanded && (
+          <div className="stoic-lens-content">
+            <div className="lens-block essence">
+              <span className="lens-label">Idea núcleo</span>
+              <p>{insight.essence}</p>
+            </div>
+            <div className="lens-grid">
+              <div className="lens-block">
+                <span className="lens-label">En sencillo</span>
+                <p>{insight.plainReading}</p>
+              </div>
+              <div className="lens-block">
+                <span className="lens-label">Ejercicio</span>
+                <p>{insight.exercise}</p>
+              </div>
+              <div className="lens-block">
+                <span className="lens-label">Diario</span>
+                <p>{insight.journalQuestion}</p>
+              </div>
+              <div className="lens-block mantra">
+                <span className="lens-label">Recordatorio</span>
+                <p>{insight.mantra}</p>
+              </div>
+            </div>
+            <div className="lens-actions">
+              <button className="mini-action" onClick={handleCopy}>📤 Compartir / copiar</button>
+              {onToggleRead && <button className="mini-action" onClick={() => onToggleRead(meditation.id)}>{isRead ? 'Reabrir lectura' : 'Marcar como leído'}</button>}
+            </div>
+          </div>
+        )}
+      </section>
 
       {(isDaily || showContext) && bookContexts && (
         <BookContext

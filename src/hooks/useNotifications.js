@@ -27,9 +27,9 @@ function detectPlatform() {
 }
 
 export function useNotifications() {
-  const [permission, setPermission] = useState('default');
-  const [isSupported, setIsSupported] = useState(false);
-  const [platform, setPlatform] = useState(() => detectPlatform());
+  const [permission, setPermission] = useState(() => ('Notification' in window ? Notification.permission : 'default'));
+  const [isSupported] = useState(() => 'serviceWorker' in navigator && detectPlatform().canUseNotifications);
+  const [platform] = useState(() => detectPlatform());
   const [settings, setSettings] = useState(() => {
     const saved = localStorage.getItem(NOTIFICATION_SETTINGS_KEY);
     return saved ? JSON.parse(saved) : {
@@ -40,18 +40,8 @@ export function useNotifications() {
   });
   const [swRegistration, setSwRegistration] = useState(null);
 
-  // Verificar soporte y registrar Service Worker
+  // Registrar Service Worker
   useEffect(() => {
-    const platformInfo = detectPlatform();
-    setPlatform(platformInfo);
-
-    const supported = 'serviceWorker' in navigator && platformInfo.canUseNotifications;
-    setIsSupported(supported);
-
-    if ('Notification' in window) {
-      setPermission(Notification.permission);
-    }
-
     // Registrar Service Worker siempre (para offline)
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register(BASE_PATH + 'sw.js')
@@ -64,18 +54,6 @@ export function useNotifications() {
         });
     }
   }, []);
-
-  // Guardar settings cuando cambien
-  useEffect(() => {
-    localStorage.setItem(NOTIFICATION_SETTINGS_KEY, JSON.stringify(settings));
-
-    // Programar/cancelar notificaciones según configuración
-    if (settings.enabled && swRegistration) {
-      scheduleNotification();
-    } else {
-      cancelScheduledNotification();
-    }
-  }, [settings, swRegistration]);
 
   // Solicitar permiso de notificaciones
   const requestPermission = useCallback(async () => {
@@ -111,6 +89,14 @@ export function useNotifications() {
     }
   }, [permission, swRegistration, requestPermission]);
 
+  // Cancelar notificación programada
+  const cancelScheduledNotification = useCallback(() => {
+    if (window._meditationNotificationTimeout) {
+      clearTimeout(window._meditationNotificationTimeout);
+      window._meditationNotificationTimeout = null;
+    }
+  }, []);
+
   // Programar notificación diaria
   const scheduleNotification = useCallback(() => {
     // Cancelar cualquier timeout existente
@@ -132,23 +118,25 @@ export function useNotifications() {
     // Guardar el ID del timeout en localStorage para poder cancelarlo
     const timeoutId = setTimeout(() => {
       sendTestNotification();
-      // Reprogramar para el día siguiente
-      scheduleNotification();
     }, timeUntilNotification);
 
     // Almacenar el timeoutId para poder cancelarlo
     window._meditationNotificationTimeout = timeoutId;
 
     console.log(`Notificación programada para: ${scheduledTime.toLocaleString()}`);
-  }, [settings, sendTestNotification]);
+  }, [settings, sendTestNotification, cancelScheduledNotification]);
 
-  // Cancelar notificación programada
-  const cancelScheduledNotification = useCallback(() => {
-    if (window._meditationNotificationTimeout) {
-      clearTimeout(window._meditationNotificationTimeout);
-      window._meditationNotificationTimeout = null;
+  // Guardar settings cuando cambien
+  useEffect(() => {
+    localStorage.setItem(NOTIFICATION_SETTINGS_KEY, JSON.stringify(settings));
+
+    // Programar/cancelar notificaciones según configuración
+    if (settings.enabled && swRegistration) {
+      scheduleNotification();
+    } else {
+      cancelScheduledNotification();
     }
-  }, []);
+  }, [settings, swRegistration, scheduleNotification, cancelScheduledNotification]);
 
   // Actualizar configuración
   const updateSettings = useCallback((newSettings) => {

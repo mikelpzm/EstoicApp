@@ -1,8 +1,18 @@
 # Meditaciones - Marco Aurelio
 
-Una Progressive Web App (PWA) elegante para explorar las meditaciones del emperador filósofo romano Marco Aurelio (121-180 d.C.).
+Una Progressive Web App (PWA) para leer, explorar y practicar las meditaciones del emperador filósofo romano Marco Aurelio (121-180 d.C.). La app no está pensada solo como colección de citas: cada pasaje se transforma en una pequeña práctica estoica.
 
 ## Características Principales
+
+### Lectura Estoica Guiada
+- Cada pasaje incluye una capa **Profundizar** con:
+  - idea núcleo,
+  - lectura en lenguaje sencillo,
+  - ejercicio práctico,
+  - pregunta de diario,
+  - recordatorio breve.
+- Favoritos y lecturas marcadas se guardan localmente en el dispositivo.
+- Indicador de progreso sobre el corpus completo.
 
 ### Meditación del Día
 - Cada día muestra una meditación diferente para reflexionar
@@ -10,7 +20,8 @@ Una Progressive Web App (PWA) elegante para explorar las meditaciones del empera
 - Opción de obtener una meditación aleatoria bajo demanda
 
 ### Explorar Meditaciones
-- **Por temáticas**: Filtra las 80+ meditaciones por 10 categorías:
+- **Rutas de práctica**: Entra por problemas reales como ira, ansiedad, deber, memento mori o simplicidad; cada ruta propone pasajes, ejercicio y diario local.
+- **Por temáticas**: Filtra las 483 meditaciones por 10 categorías:
   - Virtud ⚖️
   - Muerte y Mortalidad 💀
   - Naturaleza 🌿
@@ -23,6 +34,8 @@ Una Progressive Web App (PWA) elegante para explorar las meditaciones del empera
   - Sabiduría 📜
 
 - **Por libros**: Navega por los 12 libros originales (I-XII)
+- **Búsqueda**: Encuentra pasajes por conceptos como ira, tiempo, deber, muerte o naturaleza
+- **Carga progresiva**: El listado muestra tandas de pasajes para mantener la lectura ligera
 
 ### PWA - Aplicación Instalable
 - **Instalar en dispositivo**: Añade la app a tu pantalla de inicio
@@ -87,9 +100,13 @@ El proyecto se despliega automáticamente en GitHub Pages mediante GitHub Action
 src/
 ├── components/          # Componentes React
 ├── hooks/               # Custom hooks
+├── utils/               # Lectura guiada, limpieza de texto y búsqueda
 ├── data/                # Datos de meditaciones
 ├── App.jsx              # Componente principal
 └── main.jsx             # Punto de entrada
+
+scripts/
+└── audit_corpus.py      # Auditoría conservadora de posibles artefactos OCR/notas
 
 public/
 ├── manifest.json        # Configuración PWA
