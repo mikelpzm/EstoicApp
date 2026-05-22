@@ -1,3 +1,4 @@
+/* global clients */
 const CACHE_NAME = 'meditaciones-v1';
 const BASE_PATH = '/EstoicApp/';
 
@@ -122,10 +123,8 @@ self.addEventListener('message', (event) => {
   }
 
   if (event.data && event.data.type === 'SCHEDULE_NOTIFICATION') {
-    // Guardar la configuración de notificación
-    const { hour, minute, enabled } = event.data;
-    // Almacenar en IndexedDB o enviar al cliente para que maneje
-    event.ports[0].postMessage({ success: true });
+    // La app principal gestiona la programación; el SW confirma recepción.
+    event.ports[0]?.postMessage({ success: true });
   }
 });
 
@@ -158,7 +157,6 @@ self.addEventListener('notificationclick', (event) => {
 // Evento de push para notificaciones desde servidor (futuro)
 self.addEventListener('push', (event) => {
   if (event.data) {
-    const data = event.data.json();
     event.waitUntil(showMeditationNotification());
   }
 });

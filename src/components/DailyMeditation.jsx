@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import MeditationCard from './MeditationCard';
 import ShareImageModal from './ShareImageModal';
 import ImageGenerator from './ImageGenerator';
@@ -21,19 +21,13 @@ function getDailyMeditation(meditations) {
   return meditations[index];
 }
 
-export default function DailyMeditation({ meditations, themes, bookContexts, imageSettings }) {
-  const [dailyMeditation, setDailyMeditation] = useState(null);
-  const [fadeIn, setFadeIn] = useState(false);
+export default function DailyMeditation({ meditations, themes, bookContexts, imageSettings, favoriteIds = new Set(), readIds = new Set(), onToggleFavorite, onToggleRead }) {
+  const [fadeIn] = useState(true);
   const [showShareModal, setShowShareModal] = useState(false);
   const [generatedImage, setGeneratedImage] = useState(null);
 
   const isImageGenerationEnabled = imageSettings?.enabled && imageSettings?.apiKey;
-
-  useEffect(() => {
-    const meditation = getDailyMeditation(meditations);
-    setDailyMeditation(meditation);
-    setTimeout(() => setFadeIn(true), 100);
-  }, [meditations]);
+  const dailyMeditation = useMemo(() => getDailyMeditation(meditations), [meditations]);
 
   const today = new Date();
   const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -55,6 +49,10 @@ export default function DailyMeditation({ meditations, themes, bookContexts, ima
         themes={themes}
         bookContexts={bookContexts}
         isDaily={true}
+        isFavorite={favoriteIds.has(dailyMeditation.id)}
+        isRead={readIds.has(dailyMeditation.id)}
+        onToggleFavorite={onToggleFavorite}
+        onToggleRead={onToggleRead}
       />
 
       {isImageGenerationEnabled && (

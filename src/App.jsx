@@ -4,12 +4,13 @@ import DailyMeditation from './components/DailyMeditation';
 import ThemeFilter from './components/ThemeFilter';
 import BookFilter from './components/BookFilter';
 import MeditationList from './components/MeditationList';
-import MeditationCard from './components/MeditationCard';
+import PracticePaths from './components/PracticePaths';
 import NotificationSettings from './components/NotificationSettings';
 import ImageSettings from './components/ImageSettings';
 import ImageGenerator from './components/ImageGenerator';
 import ShareImageModal from './components/ShareImageModal';
 import useImageGeneration from './hooks/useImageGeneration';
+import { matchesMeditation } from './utils/stoicLens';
 import data from './data/meditations.json';
 import './App.css';
 
@@ -23,6 +24,10 @@ function App() {
   const [showRandomShareModal, setShowRandomShareModal] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showImageSettings, setShowImageSettings] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [onlyFavorites, setOnlyFavorites] = useState(false);
+  const [favoriteIds, setFavoriteIds] = useState(() => new Set(JSON.parse(localStorage.getItem('stoic:favorites') || '[]')));
+  const [readIds, setReadIds] = useState(() => new Set(JSON.parse(localStorage.getItem('stoic:read') || '[]')));
 
   const {
     settings: imageSettings,
@@ -32,6 +37,26 @@ function App() {
   } = useImageGeneration();
 
   const { meditations, themes, bookContexts } = data;
+
+  const toggleStoredId = useCallback((setter, storageKey, id) => {
+    setter(previous => {
+      const next = new Set(previous);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      localStorage.setItem(storageKey, JSON.stringify([...next]));
+      return next;
+    });
+  }, []);
+
+  const handleToggleFavorite = useCallback((id) => {
+    toggleStoredId(setFavoriteIds, 'stoic:favorites', id);
+  }, [toggleStoredId]);
+
+  const handleToggleRead = useCallback((id) => {
+    toggleStoredId(setReadIds, 'stoic:read', id);
+  }, [toggleStoredId]);
+
+  const readingProgress = readIds.size === 0 ? 0 : Math.max(1, Math.round((readIds.size / meditations.length) * 100));
 
   const meditationCounts = useMemo(() => {
     const counts = { total: meditations.length };
@@ -81,14 +106,21 @@ function App() {
 
   // Filtrar meditaciones según el filtro activo
   const filteredMeditations = useMemo(() => {
+    let result = meditations;
     if (filterType === 'theme' && selectedTheme) {
-      return meditations.filter(m => m.themes.includes(selectedTheme));
+      result = result.filter(m => m.themes.includes(selectedTheme));
     }
     if (filterType === 'book' && selectedBook) {
-      return meditations.filter(m => m.book === selectedBook);
+      result = result.filter(m => m.book === selectedBook);
     }
-    return meditations;
-  }, [meditations, filterType, selectedTheme, selectedBook]);
+    if (onlyFavorites) {
+      result = result.filter(m => favoriteIds.has(m.id));
+    }
+    if (searchQuery.trim()) {
+      result = result.filter(m => matchesMeditation(m, searchQuery));
+    }
+    return result;
+  }, [meditations, filterType, selectedTheme, selectedBook, onlyFavorites, favoriteIds, searchQuery]);
 
   return (
     <div className="app">
@@ -96,18 +128,37 @@ function App() {
         onShowDaily={handleShowDaily}
         onShowAll={handleShowAll}
         onRandom={handleRandomMeditation}
+        onPractice={() => setView('practice')}
         onNotifications={() => setShowNotifications(true)}
         onImageSettings={() => setShowImageSettings(true)}
         isImageGenerationEnabled={imageSettings.enabled && imageSettings.apiKey}
       />
 
       <main className="main-content">
+        <section className="hero-panel">
+          <div>
+            <span className="eyebrow">Estoicismo practicable</span>
+            <h2>Lee menos como cita y más como entrenamiento.</h2>
+            <p>Cada pasaje ahora puede abrirse como una práctica: idea núcleo, traducción a lenguaje sencillo, ejercicio, pregunta de diario y recordatorio breve.</p>
+          </div>
+          <div className="progress-card">
+            <span className="progress-number">{readingProgress}%</span>
+            <span className="progress-label">del corpus marcado como leído</span>
+            <div className="progress-track"><span style={{ width: `${readingProgress}%` }} /></div>
+            <small>{favoriteIds.size} favoritos · {readIds.size}/{meditations.length} lecturas</small>
+          </div>
+        </section>
+
         {view === 'daily' ? (
           <DailyMeditation
             meditations={meditations}
             themes={themes}
             bookContexts={bookContexts}
             imageSettings={imageSettings}
+            favoriteIds={favoriteIds}
+            readIds={readIds}
+            onToggleFavorite={handleToggleFavorite}
+            onToggleRead={handleToggleRead}
           />
         ) : view === 'random' ? (
           <section className="random-section fade-in">
@@ -126,6 +177,10 @@ function App() {
                   bookContexts={bookContexts}
                   isDaily={false}
                   showContext={true}
+                  isFavorite={favoriteIds.has(randomMeditation.id)}
+                  isRead={readIds.has(randomMeditation.id)}
+                  onToggleFavorite={handleToggleFavorite}
+                  onToggleRead={handleToggleRead}
                 />
 
                 {imageSettings.enabled && imageSettings.apiKey && (
@@ -181,8 +236,32 @@ function App() {
               </div>
             )}
           </section>
+        ) : view === 'practice' ? (
+          <PracticePaths
+            meditations={meditations}
+            themes={themes}
+            favoriteIds={favoriteIds}
+            readIds={readIds}
+            onToggleFavorite={handleToggleFavorite}
+            onToggleRead={handleToggleRead}
+          />
         ) : (
           <>
+            <section className="explore-toolbar">
+              <div className="search-box">
+                <span>⌕</span>
+                <input
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
+                  placeholder="Buscar por idea: muerte, deber, ira, tiempo..."
+                  aria-label="Buscar meditaciones"
+                />
+              </div>
+              <button className={`toggle-pill ${onlyFavorites ? 'active' : ''}`} onClick={() => setOnlyFavorites(!onlyFavorites)}>
+                ★ Solo favoritos
+              </button>
+            </section>
+
             <div className="filter-tabs">
               <button
                 className={`filter-tab ${filterType === 'theme' ? 'active' : ''}`}
@@ -224,6 +303,10 @@ function App() {
               themes={themes}
               selectedTheme={selectedTheme}
               selectedBook={selectedBook}
+              favoriteIds={favoriteIds}
+              readIds={readIds}
+              onToggleFavorite={handleToggleFavorite}
+              onToggleRead={handleToggleRead}
             />
           </>
         )}
