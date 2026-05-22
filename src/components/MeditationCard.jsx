@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import BookContext from './BookContext';
+import Icon from './Icon';
 import { buildStoicInsight, cleanMeditationText } from '../utils/stoicLens';
+import { themeIconNames } from '../utils/themeIcons';
 
 export default function MeditationCard({
   meditation,
@@ -36,20 +38,30 @@ export default function MeditationCard({
       <div className="card-topline">
         {isDaily ? (
           <div className="daily-badge">
-            <span>☀️</span> Meditación del día
+            <Icon name="sun" size={16} /> Meditación del día
           </div>
         ) : (
           <span className="reading-badge">Lectura estoica</span>
         )}
         <div className="card-actions-inline">
           {onToggleRead && (
-            <button className="icon-action" onClick={() => onToggleRead(meditation.id)} title={isRead ? 'Marcar como pendiente' : 'Marcar como leído'}>
-              {isRead ? '✓' : '○'}
+            <button
+              className="icon-action"
+              onClick={() => onToggleRead(meditation.id)}
+              title={isRead ? 'Marcar como pendiente' : 'Marcar como leído'}
+              aria-label={isRead ? 'Marcar como pendiente' : 'Marcar como leído'}
+            >
+              <Icon name={isRead ? 'check' : 'circle'} size={17} />
             </button>
           )}
           {onToggleFavorite && (
-            <button className="icon-action" onClick={() => onToggleFavorite(meditation.id)} title={isFavorite ? 'Quitar de favoritos' : 'Guardar como favorito'}>
-              {isFavorite ? '★' : '☆'}
+            <button
+              className="icon-action"
+              onClick={() => onToggleFavorite(meditation.id)}
+              title={isFavorite ? 'Quitar de favoritos' : 'Guardar como favorito'}
+              aria-label={isFavorite ? 'Quitar de favoritos' : 'Guardar como favorito'}
+            >
+              <Icon name="star" size={17} className={isFavorite ? 'filled-icon' : ''} />
             </button>
           )}
         </div>
@@ -73,16 +85,16 @@ export default function MeditationCard({
         <div className="meditation-themes">
           {meditationThemes.map(theme => (
             <span key={theme.id} className="theme-tag">
-              {theme.icon} {theme.name}
+              <Icon name={themeIconNames[theme.id]} size={15} /> {theme.name}
             </span>
           ))}
         </div>
       </footer>
 
       <section className="stoic-lens" aria-label="Lectura estoica del pasaje">
-        <button className="stoic-lens-toggle" onClick={() => setExpanded(!expanded)}>
-          <span>✦ Profundizar</span>
-          <span className={expanded ? 'rotated' : ''}>⌄</span>
+        <button className="stoic-lens-toggle" onClick={() => setExpanded(!expanded)} aria-expanded={expanded}>
+          <span><Icon name="spark" size={16} /> Profundizar</span>
+          <Icon name="chevronDown" size={17} className={expanded ? 'rotated' : ''} />
         </button>
 
         {expanded && (
@@ -110,8 +122,13 @@ export default function MeditationCard({
               </div>
             </div>
             <div className="lens-actions">
-              <button className="mini-action" onClick={handleCopy}>📤 Compartir / copiar</button>
-              {onToggleRead && <button className="mini-action" onClick={() => onToggleRead(meditation.id)}>{isRead ? 'Reabrir lectura' : 'Marcar como leído'}</button>}
+              <button className="mini-action" onClick={handleCopy}><Icon name="share" size={16} /> Compartir / copiar</button>
+              {onToggleRead && (
+                <button className="mini-action" onClick={() => onToggleRead(meditation.id)}>
+                  <Icon name={isRead ? 'circle' : 'check'} size={16} />
+                  {isRead ? 'Reabrir lectura' : 'Marcar como leído'}
+                </button>
+              )}
             </div>
           </div>
         )}

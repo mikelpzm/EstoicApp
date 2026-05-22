@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import MeditationCard from './MeditationCard';
+import Icon from './Icon';
+import { themeIconNames } from '../utils/themeIcons';
 
 const BOOK_NAMES = {
   1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI',
@@ -34,14 +36,14 @@ export default function MeditationList({
     if (selectedTheme) {
       return (
         <>
-          <span>{selectedThemeData?.icon}</span> {selectedThemeData?.name}
+          <Icon name={themeIconNames[selectedTheme]} size={22} /> {selectedThemeData?.name || 'Tema'}
         </>
       );
     }
     if (selectedBook) {
       return (
         <>
-          <span>📖</span> Libro {BOOK_NAMES[selectedBook]}
+          <Icon name="book" size={22} /> Libro {BOOK_NAMES[selectedBook]}
         </>
       );
     }
@@ -60,7 +62,7 @@ export default function MeditationList({
 
       {meditations.length === 0 ? (
         <div className="empty-state">
-          <span>🕯️</span>
+          <Icon name="spark" size={28} />
           <h3>No hay pasajes con esos filtros</h3>
           <p>Prueba con otra palabra, otro tema o desactiva “Solo favoritos”.</p>
         </div>
@@ -83,6 +85,7 @@ export default function MeditationList({
           {visibleCount < meditations.length && (
             <div className="load-more-row">
               <button className="load-more-btn" onClick={() => setVisibleCount(count => count + PAGE_SIZE)}>
+                <Icon name="chevronDown" size={16} />
                 Cargar {Math.min(PAGE_SIZE, meditations.length - visibleCount)} pasajes más
               </button>
               <small>Mostrando {visibleMeditations.length} de {meditations.length}</small>

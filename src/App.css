@@ -1,22 +1,27 @@
 /* Variables */
 :root {
-  --color-bg: #0f0f0f;
-  --color-bg-secondary: #1a1a1a;
-  --color-bg-card: #222222;
+  --color-bg: #090909;
+  --color-bg-secondary: #111111;
+  --color-bg-card: #171717;
+  --color-bg-elevated: #1d1b18;
   --color-gold: #c9a55c;
   --color-gold-light: #dfc080;
   --color-gold-dark: #a07c3a;
-  --color-text: #e8e8e8;
-  --color-text-muted: #888888;
-  --color-border: #333333;
+  --color-olive: #8fa982;
+  --color-ink-blue: #7f95b2;
+  --color-danger: #ff817a;
+  --color-text: #f0ece4;
+  --color-text-muted: #9a9286;
+  --color-border: #2a2824;
+  --color-border-soft: rgba(255, 255, 255, 0.08);
   --font-serif: 'Cormorant Garamond', Georgia, serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.5);
   --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
+  --radius-md: 8px;
+  --radius-lg: 8px;
 }
 
 /* Reset & Base */
@@ -32,10 +37,35 @@ html {
 
 body {
   font-family: var(--font-sans);
-  background: var(--color-bg);
+  background:
+    linear-gradient(180deg, rgba(201, 165, 92, 0.08), transparent 280px),
+    linear-gradient(90deg, rgba(127, 149, 178, 0.055), transparent 42%),
+    var(--color-bg);
   color: var(--color-text);
   line-height: 1.6;
   min-height: 100vh;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid rgba(223, 192, 128, 0.9);
+  outline-offset: 3px;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+  transform: none;
 }
 
 /* App Container */
@@ -70,8 +100,25 @@ body {
   gap: 0.75rem;
 }
 
-.logo-icon {
-  font-size: 2rem;
+.logo-mark {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  color: var(--color-gold-light);
+  background:
+    radial-gradient(circle at 35% 20%, rgba(245, 209, 133, 0.22), transparent 42%),
+    linear-gradient(145deg, rgba(201, 165, 92, 0.18), rgba(255, 255, 255, 0.035));
+  border: 1px solid rgba(201, 165, 92, 0.34);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.24), inset 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.brand-copy {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
 }
 
 .logo h1 {
@@ -96,11 +143,11 @@ body {
 }
 
 .nav-btn {
-  background: transparent;
-  border: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(201, 165, 92, 0.16);
   color: var(--color-text);
   padding: 0.5rem 1rem;
-  border-radius: var(--radius-sm);
+  border-radius: 999px;
   cursor: pointer;
   font-size: 0.9rem;
   display: flex;
@@ -110,9 +157,39 @@ body {
 }
 
 .nav-btn:hover {
-  background: var(--color-bg-card);
+  background: rgba(201, 165, 92, 0.1);
   border-color: var(--color-gold);
   color: var(--color-gold);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+}
+
+.app-icon {
+  display: inline-block;
+  flex: 0 0 auto;
+  vertical-align: -0.15em;
+}
+
+.nav-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.filled-icon {
+  color: var(--color-gold-light);
+  fill: rgba(201, 165, 92, 0.22);
+}
+
+.action-btn,
+.filter-tab,
+.toggle-pill,
+.mini-action,
+.daily-badge,
+.practice-plan h3,
+.list-header h2,
+.book-context-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
 }
 
 /* Main Content */
@@ -1311,7 +1388,15 @@ body {
 }
 
 .path-icon {
-  font-size: 1.8rem;
+  width: 46px;
+  height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  color: var(--color-gold-light);
+  background: rgba(201, 165, 92, 0.1);
+  border: 1px solid rgba(201, 165, 92, 0.18);
 }
 
 .path-card strong {

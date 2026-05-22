@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Icon from './Icon';
 import { validateApiKey } from '../services/geminiService';
 import './ImageSettings.css';
 
@@ -43,9 +44,9 @@ function ImageSettings({ settings, onToggleEnabled, onSetApiKey, onClearApiKey, 
   return (
     <div className="image-settings">
       <div className="image-settings-header">
-        <h3>Generación de Imágenes</h3>
+        <h3><Icon name="image" size={20} /> Generación de Imágenes</h3>
         <button className="close-btn" onClick={onClose} aria-label="Cerrar">
-          <span>×</span>
+          <Icon name="x" size={20} />
         </button>
       </div>
 
@@ -84,8 +85,9 @@ function ImageSettings({ settings, onToggleEnabled, onSetApiKey, onClearApiKey, 
                     className="toggle-visibility-btn"
                     onClick={() => setShowApiKey(!showApiKey)}
                     type="button"
+                    aria-label={showApiKey ? 'Ocultar API key' : 'Mostrar API key'}
                   >
-                    {showApiKey ? '🙈' : '👁️'}
+                    <Icon name={showApiKey ? 'eyeOff' : 'eye'} size={18} />
                   </button>
                 </div>
                 <button
@@ -112,8 +114,9 @@ function ImageSettings({ settings, onToggleEnabled, onSetApiKey, onClearApiKey, 
                   className="toggle-visibility-btn"
                   onClick={() => setShowApiKey(!showApiKey)}
                   type="button"
+                  aria-label={showApiKey ? 'Ocultar API key' : 'Mostrar API key'}
                 >
-                  {showApiKey ? '🙈' : '👁️'}
+                  <Icon name={showApiKey ? 'eyeOff' : 'eye'} size={18} />
                 </button>
                 <button
                   className="save-api-key-btn"
@@ -148,7 +151,7 @@ function ImageSettings({ settings, onToggleEnabled, onSetApiKey, onClearApiKey, 
 
         {settings.enabled && settings.apiKey && (
           <div className="feature-enabled-info">
-            <span>✨</span>
+            <Icon name="spark" size={22} />
             <p>
               La generación de imágenes está activa. Al compartir una meditación,
               se generará automáticamente una imagen artística.

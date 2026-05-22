@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import Header from './components/Header';
 import DailyMeditation from './components/DailyMeditation';
+import MeditationCard from './components/MeditationCard';
 import ThemeFilter from './components/ThemeFilter';
 import BookFilter from './components/BookFilter';
 import MeditationList from './components/MeditationList';
@@ -9,10 +10,52 @@ import NotificationSettings from './components/NotificationSettings';
 import ImageSettings from './components/ImageSettings';
 import ImageGenerator from './components/ImageGenerator';
 import ShareImageModal from './components/ShareImageModal';
+import Icon from './components/Icon';
 import useImageGeneration from './hooks/useImageGeneration';
 import { matchesMeditation } from './utils/stoicLens';
 import data from './data/meditations.json';
 import './App.css';
+
+function readStoredIdSet(storageKey) {
+  try {
+    const value = localStorage.getItem(storageKey);
+    const parsed = value ? JSON.parse(value) : [];
+    return new Set(Array.isArray(parsed) ? parsed : []);
+  } catch {
+    return new Set();
+  }
+}
+
+function writeStoredIds(storageKey, ids) {
+  try {
+    localStorage.setItem(storageKey, JSON.stringify([...ids]));
+  } catch {
+    // The app remains usable if private browsing blocks storage.
+  }
+}
+
+function readStoredValue(storageKey, fallback = '') {
+  try {
+    return localStorage.getItem(storageKey) || fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function writeStoredValue(storageKey, value) {
+  try {
+    localStorage.setItem(storageKey, value);
+  } catch {
+    // Ignore storage failures; the interaction still completed.
+  }
+}
+
+function getLocalDateKey(date = new Date()) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
 
 function App() {
   const [view, setView] = useState('daily'); // 'daily', 'explore', 'random'
@@ -26,8 +69,9 @@ function App() {
   const [showImageSettings, setShowImageSettings] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [onlyFavorites, setOnlyFavorites] = useState(false);
-  const [favoriteIds, setFavoriteIds] = useState(() => new Set(JSON.parse(localStorage.getItem('stoic:favorites') || '[]')));
-  const [readIds, setReadIds] = useState(() => new Set(JSON.parse(localStorage.getItem('stoic:read') || '[]')));
+  const [favoriteIds, setFavoriteIds] = useState(() => readStoredIdSet('stoic:favorites'));
+  const [readIds, setReadIds] = useState(() => readStoredIdSet('stoic:read'));
+  const [lastPracticeDate, setLastPracticeDate] = useState(() => readStoredValue('stoic:last-practice-date'));
 
   const {
     settings: imageSettings,
@@ -36,14 +80,17 @@ function App() {
     clearApiKey
   } = useImageGeneration();
 
-  const { meditations, themes, bookContexts } = data;
+  const meditations = useMemo(() => Array.isArray(data.meditations) ? data.meditations : [], []);
+  const themes = useMemo(() => Array.isArray(data.themes) ? data.themes : [], []);
+  const bookContexts = useMemo(() => data.bookContexts || {}, []);
+  const hasMeditations = meditations.length > 0;
 
   const toggleStoredId = useCallback((setter, storageKey, id) => {
     setter(previous => {
       const next = new Set(previous);
       if (next.has(id)) next.delete(id);
       else next.add(id);
-      localStorage.setItem(storageKey, JSON.stringify([...next]));
+      writeStoredIds(storageKey, next);
       return next;
     });
   }, []);
@@ -54,9 +101,21 @@ function App() {
 
   const handleToggleRead = useCallback((id) => {
     toggleStoredId(setReadIds, 'stoic:read', id);
+    const todayKey = getLocalDateKey();
+    setLastPracticeDate(todayKey);
+    writeStoredValue('stoic:last-practice-date', todayKey);
   }, [toggleStoredId]);
 
-  const readingProgress = readIds.size === 0 ? 0 : Math.max(1, Math.round((readIds.size / meditations.length) * 100));
+  const readCount = useMemo(
+    () => meditations.filter(meditation => readIds.has(meditation.id)).length,
+    [meditations, readIds]
+  );
+  const favoriteCount = useMemo(
+    () => meditations.filter(meditation => favoriteIds.has(meditation.id)).length,
+    [meditations, favoriteIds]
+  );
+  const readingProgress = meditations.length === 0 ? 0 : Math.round((readCount / meditations.length) * 100);
+  const practicedToday = lastPracticeDate === getLocalDateKey();
 
   const meditationCounts = useMemo(() => {
     const counts = { total: meditations.length };
@@ -91,18 +150,59 @@ function App() {
     setSelectedTheme(null);
   };
 
+  const getRandomMeditation = useCallback((excludeId) => {
+    if (!hasMeditations) return null;
+    if (meditations.length === 1) return meditations[0];
+
+    let nextMeditation = meditations[Math.floor(Math.random() * meditations.length)];
+    let attempts = 0;
+    while (nextMeditation?.id === excludeId && attempts < 8) {
+      nextMeditation = meditations[Math.floor(Math.random() * meditations.length)];
+      attempts += 1;
+    }
+
+    return nextMeditation || meditations[0];
+  }, [hasMeditations, meditations]);
+
   const handleRandomMeditation = useCallback(() => {
-    const randomIndex = Math.floor(Math.random() * meditations.length);
-    setRandomMeditation(meditations[randomIndex]);
+    setRandomMeditation(previous => getRandomMeditation(previous?.id));
     setRandomGeneratedImage(null);
     setView('random');
-  }, [meditations]);
+  }, [getRandomMeditation]);
 
-  const handleAnotherRandom = () => {
-    const randomIndex = Math.floor(Math.random() * meditations.length);
-    setRandomMeditation(meditations[randomIndex]);
+  const handleAnotherRandom = useCallback(() => {
+    setRandomMeditation(previous => getRandomMeditation(previous?.id));
     setRandomGeneratedImage(null);
-  };
+  }, [getRandomMeditation]);
+
+  const handleShareMeditation = useCallback(async (meditation) => {
+    if (!meditation) return;
+
+    const shareText = `"${meditation.text}" — Marco Aurelio, Libro ${meditation.book}`;
+
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: 'Meditación de Marco Aurelio',
+          text: shareText,
+        });
+        return;
+      }
+
+      await navigator.clipboard.writeText(shareText);
+      alert('Meditación copiada al portapapeles');
+    } catch (error) {
+      if (error?.name !== 'AbortError' && navigator.clipboard) {
+        await navigator.clipboard.writeText(shareText);
+        alert('Meditación copiada al portapapeles');
+      }
+    }
+  }, []);
+
+  const randomMeditationInCorpus = randomMeditation && meditations.some(meditation => meditation.id === randomMeditation.id);
+  const activeRandomMeditation = view === 'random'
+    ? (randomMeditationInCorpus ? randomMeditation : meditations[0] || null)
+    : randomMeditation;
 
   // Filtrar meditaciones según el filtro activo
   const filteredMeditations = useMemo(() => {
@@ -131,21 +231,31 @@ function App() {
         onPractice={() => setView('practice')}
         onNotifications={() => setShowNotifications(true)}
         onImageSettings={() => setShowImageSettings(true)}
+        activeView={view}
         isImageGenerationEnabled={imageSettings.enabled && imageSettings.apiKey}
       />
 
       <main className="main-content">
         <section className="hero-panel">
-          <div>
+          <div className="hero-copy">
             <span className="eyebrow">Estoicismo practicable</span>
             <h2>Lee menos como cita y más como entrenamiento.</h2>
             <p>Cada pasaje ahora puede abrirse como una práctica: idea núcleo, traducción a lenguaje sencillo, ejercicio, pregunta de diario y recordatorio breve.</p>
+            <div className="ritual-steps" aria-label="Ritual diario sugerido">
+              <span><Icon name="library" size={15} /> Leer</span>
+              <span><Icon name="compass" size={15} /> Aplicar</span>
+              <span><Icon name="pen" size={15} /> Escribir</span>
+            </div>
           </div>
           <div className="progress-card">
+            <span className={`practice-state ${practicedToday ? 'complete' : ''}`}>
+              <Icon name={practicedToday ? 'check' : 'calendar'} size={15} />
+              {practicedToday ? 'Práctica de hoy registrada' : 'Práctica de hoy pendiente'}
+            </span>
             <span className="progress-number">{readingProgress}%</span>
             <span className="progress-label">del corpus marcado como leído</span>
             <div className="progress-track"><span style={{ width: `${readingProgress}%` }} /></div>
-            <small>{favoriteIds.size} favoritos · {readIds.size}/{meditations.length} lecturas</small>
+            <small>{favoriteCount} favoritos · {readCount}/{meditations.length} lecturas</small>
           </div>
         </section>
 
@@ -164,69 +274,66 @@ function App() {
           <section className="random-section fade-in">
             <div className="random-header">
               <span className="random-label">Meditación aleatoria</span>
+              <h2>Un pasaje para el momento presente.</h2>
               <p className="random-intro">
-                Una reflexión al azar para tu momento presente
+                Sal del orden habitual, toma una sola idea y conviértela en conducta.
               </p>
             </div>
 
-            {randomMeditation && (
+            {activeRandomMeditation ? (
               <>
                 <MeditationCard
-                  meditation={randomMeditation}
+                  meditation={activeRandomMeditation}
                   themes={themes}
                   bookContexts={bookContexts}
                   isDaily={false}
                   showContext={true}
-                  isFavorite={favoriteIds.has(randomMeditation.id)}
-                  isRead={readIds.has(randomMeditation.id)}
+                  isFavorite={favoriteIds.has(activeRandomMeditation.id)}
+                  isRead={readIds.has(activeRandomMeditation.id)}
                   onToggleFavorite={handleToggleFavorite}
                   onToggleRead={handleToggleRead}
                 />
 
                 {imageSettings.enabled && imageSettings.apiKey && (
                   <ImageGenerator
-                    meditation={randomMeditation}
+                    meditation={activeRandomMeditation}
                     apiKey={imageSettings.apiKey}
                     generatedImage={randomGeneratedImage}
                     onImageGenerated={setRandomGeneratedImage}
                   />
                 )}
               </>
+            ) : (
+              <div className="empty-state random-empty">
+                <Icon name="warning" size={30} />
+                <h3>No hay meditaciones disponibles</h3>
+                <p>El corpus no cargó ningún pasaje, pero la vista permanece estable.</p>
+              </div>
             )}
 
             <div className="daily-actions">
-              <button className="action-btn" onClick={handleAnotherRandom}>
-                <span>🎲</span> Otra aleatoria
+              <button className="action-btn" onClick={handleAnotherRandom} disabled={!hasMeditations}>
+                <Icon name="shuffle" /> Otra aleatoria
               </button>
               {imageSettings.enabled && imageSettings.apiKey ? (
-                <button className="action-btn share" onClick={() => setShowRandomShareModal(true)}>
-                  <span>🖼️</span> Compartir con imagen
+                <button className="action-btn share" onClick={() => setShowRandomShareModal(true)} disabled={!activeRandomMeditation}>
+                  <Icon name="image" /> Compartir con imagen
                 </button>
               ) : (
-                <button className="action-btn" onClick={() => {
-                  if (navigator.share) {
-                    navigator.share({
-                      title: 'Meditación de Marco Aurelio',
-                      text: `"${randomMeditation.text}" — Marco Aurelio, Libro ${randomMeditation.book}`,
-                    });
-                  } else {
-                    navigator.clipboard.writeText(`"${randomMeditation.text}" — Marco Aurelio, Libro ${randomMeditation.book}`);
-                    alert('Meditación copiada al portapapeles');
-                  }
-                }}>
-                  <span>📤</span> Compartir
+                <button className="action-btn" onClick={() => handleShareMeditation(activeRandomMeditation)} disabled={!activeRandomMeditation}>
+                  <Icon name="share" /> Compartir
                 </button>
               )}
               <button className="action-btn" onClick={handleShowAll}>
-                <span>📚</span> Explorar todas
+                <Icon name="library" /> Explorar todas
               </button>
             </div>
 
-            {showRandomShareModal && randomMeditation && (
+            {showRandomShareModal && activeRandomMeditation && (
               <div className="modal-overlay" onClick={() => setShowRandomShareModal(false)}>
                 <div onClick={(e) => e.stopPropagation()}>
                   <ShareImageModal
-                    meditation={randomMeditation}
+                    meditation={activeRandomMeditation}
                     apiKey={imageSettings.apiKey}
                     onClose={() => setShowRandomShareModal(false)}
                     existingImage={randomGeneratedImage}
@@ -249,7 +356,7 @@ function App() {
           <>
             <section className="explore-toolbar">
               <div className="search-box">
-                <span>⌕</span>
+                <Icon name="search" size={18} />
                 <input
                   value={searchQuery}
                   onChange={(event) => setSearchQuery(event.target.value)}
@@ -258,7 +365,7 @@ function App() {
                 />
               </div>
               <button className={`toggle-pill ${onlyFavorites ? 'active' : ''}`} onClick={() => setOnlyFavorites(!onlyFavorites)}>
-                ★ Solo favoritos
+                <Icon name="star" size={16} /> Solo favoritos
               </button>
             </section>
 
@@ -270,7 +377,7 @@ function App() {
                   setSelectedBook(null);
                 }}
               >
-                <span>🏷️</span> Por Tema
+                <Icon name="tag" /> Por Tema
               </button>
               <button
                 className={`filter-tab ${filterType === 'book' ? 'active' : ''}`}
@@ -279,7 +386,7 @@ function App() {
                   setSelectedTheme(null);
                 }}
               >
-                <span>📖</span> Por Libro
+                <Icon name="book" /> Por Libro
               </button>
             </div>
 
