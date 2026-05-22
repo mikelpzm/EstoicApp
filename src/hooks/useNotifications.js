@@ -2,6 +2,11 @@ import { useState, useEffect, useCallback } from 'react';
 
 const NOTIFICATION_SETTINGS_KEY = 'meditation-notification-settings';
 const BASE_PATH = '/EstoicApp/';
+const DEFAULT_NOTIFICATION_SETTINGS = {
+  enabled: false,
+  hour: 8,
+  minute: 0
+};
 
 // Detectar plataforma y navegador
 function detectPlatform() {
@@ -31,12 +36,12 @@ export function useNotifications() {
   const [isSupported] = useState(() => 'serviceWorker' in navigator && detectPlatform().canUseNotifications);
   const [platform] = useState(() => detectPlatform());
   const [settings, setSettings] = useState(() => {
-    const saved = localStorage.getItem(NOTIFICATION_SETTINGS_KEY);
-    return saved ? JSON.parse(saved) : {
-      enabled: false,
-      hour: 8,
-      minute: 0
-    };
+    try {
+      const saved = localStorage.getItem(NOTIFICATION_SETTINGS_KEY);
+      return saved ? { ...DEFAULT_NOTIFICATION_SETTINGS, ...JSON.parse(saved) } : DEFAULT_NOTIFICATION_SETTINGS;
+    } catch {
+      return DEFAULT_NOTIFICATION_SETTINGS;
+    }
   });
   const [swRegistration, setSwRegistration] = useState(null);
 
@@ -128,7 +133,11 @@ export function useNotifications() {
 
   // Guardar settings cuando cambien
   useEffect(() => {
-    localStorage.setItem(NOTIFICATION_SETTINGS_KEY, JSON.stringify(settings));
+    try {
+      localStorage.setItem(NOTIFICATION_SETTINGS_KEY, JSON.stringify(settings));
+    } catch (error) {
+      console.error('Error al guardar configuración de notificaciones:', error);
+    }
 
     // Programar/cancelar notificaciones según configuración
     if (settings.enabled && swRegistration) {

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Icon from './Icon';
 import { generateQuoteImage } from '../services/geminiService';
 import './ShareImageModal.css';
 
@@ -115,9 +116,9 @@ function ShareImageModal({ meditation, apiKey, onClose, existingImage, onImageGe
   return (
     <div className="share-image-modal">
       <div className="share-modal-header">
-        <h3>Compartir Meditación</h3>
+        <h3><Icon name="share" size={20} /> Compartir Meditación</h3>
         <button className="close-btn" onClick={onClose} aria-label="Cerrar">
-          <span>×</span>
+          <Icon name="x" size={20} />
         </button>
       </div>
 
@@ -131,9 +132,10 @@ function ShareImageModal({ meditation, apiKey, onClose, existingImage, onImageGe
             </div>
           ) : error ? (
             <div className="error-state">
-              <span className="error-icon">⚠️</span>
+              <span className="error-icon"><Icon name="warning" size={26} /></span>
               <p>{error}</p>
               <button className="retry-btn" onClick={handleRetry}>
+                <Icon name="refresh" size={16} />
                 Reintentar
               </button>
             </div>
@@ -159,15 +161,15 @@ function ShareImageModal({ meditation, apiKey, onClose, existingImage, onImageGe
           {imageUrl && (
             <>
               <button className="share-btn primary" onClick={handleShare}>
-                <span>📤</span> Compartir
+                <Icon name="share" /> Compartir
               </button>
               <button className="share-btn secondary" onClick={handleDownload}>
-                <span>💾</span> Descargar
+                <Icon name="download" /> Descargar
               </button>
             </>
           )}
           <button className="share-btn tertiary" onClick={handleCopyText}>
-            <span>📋</span> Copiar texto
+            <Icon name="copy" /> Copiar texto
           </button>
         </div>
 

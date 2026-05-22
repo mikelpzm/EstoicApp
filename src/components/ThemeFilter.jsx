@@ -1,4 +1,6 @@
 import React from 'react';
+import Icon from './Icon';
+import { themeIconNames } from '../utils/themeIcons';
 
 export default function ThemeFilter({ themes, selectedTheme, onSelectTheme, meditationCounts }) {
   return (
@@ -9,7 +11,7 @@ export default function ThemeFilter({ themes, selectedTheme, onSelectTheme, medi
           className={`theme-btn ${selectedTheme === null ? 'active' : ''}`}
           onClick={() => onSelectTheme(null)}
         >
-          <span className="theme-icon">📖</span>
+          <span className="theme-icon"><Icon name="library" size={22} /></span>
           <span className="theme-name">Todas</span>
           <span className="theme-count">{meditationCounts.total}</span>
         </button>
@@ -20,7 +22,7 @@ export default function ThemeFilter({ themes, selectedTheme, onSelectTheme, medi
             className={`theme-btn ${selectedTheme === theme.id ? 'active' : ''}`}
             onClick={() => onSelectTheme(theme.id)}
           >
-            <span className="theme-icon">{theme.icon}</span>
+            <span className="theme-icon"><Icon name={themeIconNames[theme.id]} size={22} /></span>
             <span className="theme-name">{theme.name}</span>
             <span className="theme-count">{meditationCounts[theme.id] || 0}</span>
           </button>

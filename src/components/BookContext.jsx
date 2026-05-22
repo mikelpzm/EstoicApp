@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Icon from './Icon';
 
 export default function BookContext({ bookNumber, bookContexts }) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -14,13 +15,11 @@ export default function BookContext({ bookNumber, bookContexts }) {
         onClick={() => setIsExpanded(!isExpanded)}
         aria-expanded={isExpanded}
       >
-        <span className="book-context-icon">📜</span>
+        <span className="book-context-icon"><Icon name="book" size={18} /></span>
         <span className="book-context-title">
           Libro {bookNumber}: {context.title}
         </span>
-        <span className={`book-context-arrow ${isExpanded ? 'rotated' : ''}`}>
-          ▼
-        </span>
+        <Icon name="chevronDown" size={16} className={`book-context-arrow ${isExpanded ? 'rotated' : ''}`} />
       </button>
 
       {isExpanded && (

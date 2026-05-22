@@ -6,52 +6,52 @@
     {
       "id": "virtue",
       "name": "Virtud",
-      "icon": "⚖️"
+      "icon": "scales"
     },
     {
       "id": "death",
       "name": "Muerte y Mortalidad",
-      "icon": "💀"
+      "icon": "skull"
     },
     {
       "id": "nature",
       "name": "Naturaleza",
-      "icon": "🌿"
+      "icon": "leaf"
     },
     {
       "id": "duty",
       "name": "Deber y Responsabilidad",
-      "icon": "🏛️"
+      "icon": "service"
     },
     {
       "id": "mind",
       "name": "Control Mental",
-      "icon": "🧠"
+      "icon": "mind"
     },
     {
       "id": "time",
       "name": "Tiempo y Transitoriedad",
-      "icon": "⏳"
+      "icon": "hourglass"
     },
     {
       "id": "adversity",
       "name": "Adversidad",
-      "icon": "🔥"
+      "icon": "flame"
     },
     {
       "id": "relationships",
       "name": "Relaciones Humanas",
-      "icon": "🤝"
+      "icon": "handshake"
     },
     {
       "id": "simplicity",
       "name": "Simplicidad",
-      "icon": "🪨"
+      "icon": "stone"
     },
     {
       "id": "wisdom",
       "name": "Sabiduría",
-      "icon": "📜"
+      "icon": "scroll"
     }
   ],
   "bookContexts": {

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { generateQuoteImage } from '../services/geminiService';
+import Icon from './Icon';
 import './ImageGenerator.css';
 
 function ImageGenerator({ meditation, apiKey, generatedImage, onImageGenerated }) {
@@ -29,7 +30,7 @@ function ImageGenerator({ meditation, apiKey, generatedImage, onImageGenerated }
     return (
       <div className="image-generator">
         <button className="generate-btn" onClick={handleGenerate}>
-          <span>🎨</span> Generar imagen
+          <Icon name="image" size={17} /> Generar imagen
         </button>
       </div>
     );
@@ -46,9 +47,10 @@ function ImageGenerator({ meditation, apiKey, generatedImage, onImageGenerated }
           </div>
         ) : error ? (
           <div className="image-error-state">
-            <span className="image-error-icon">⚠️</span>
+            <span className="image-error-icon"><Icon name="warning" size={28} /></span>
             <p>{error}</p>
             <button className="image-retry-btn" onClick={handleRetry}>
+              <Icon name="refresh" size={16} />
               Reintentar
             </button>
           </div>
@@ -60,7 +62,7 @@ function ImageGenerator({ meditation, apiKey, generatedImage, onImageGenerated }
               className="inline-generated-image"
             />
             <button className="regenerate-btn" onClick={handleGenerate}>
-              <span>🔄</span> Regenerar imagen
+              <Icon name="refresh" size={16} /> Regenerar imagen
             </button>
           </>
         )}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import useNotifications from '../hooks/useNotifications';
+import Icon from './Icon';
 import './NotificationSettings.css';
 
 function NotificationSettings({ onClose }) {
@@ -46,13 +47,13 @@ function NotificationSettings({ onClose }) {
       <div className="notification-settings">
         <div className="notification-header">
           <h3>Notificaciones</h3>
-          <button className="close-btn" onClick={onClose}>
-            <span>×</span>
+          <button className="close-btn" onClick={onClose} aria-label="Cerrar">
+            <Icon name="x" size={20} />
           </button>
         </div>
         <div className="notification-content">
           <div className="notification-ios-guide">
-            <span className="guide-icon">🍎</span>
+            <span className="guide-icon"><Icon name="phone" size={42} /></span>
             <h4>Usa Safari para notificaciones</h4>
             <p>
               En iOS, las notificaciones web solo funcionan con <strong>Safari</strong>.
@@ -80,13 +81,13 @@ function NotificationSettings({ onClose }) {
       <div className="notification-settings">
         <div className="notification-header">
           <h3>Notificaciones</h3>
-          <button className="close-btn" onClick={onClose}>
-            <span>×</span>
+          <button className="close-btn" onClick={onClose} aria-label="Cerrar">
+            <Icon name="x" size={20} />
           </button>
         </div>
         <div className="notification-content">
           <div className="notification-ios-guide">
-            <span className="guide-icon">📲</span>
+            <span className="guide-icon"><Icon name="phone" size={42} /></span>
             <h4>Instala la app primero</h4>
             <p>
               Para recibir notificaciones en iOS, necesitas instalar la app en tu pantalla de inicio.
@@ -94,7 +95,7 @@ function NotificationSettings({ onClose }) {
             <div className="guide-steps">
               <p><strong>Pasos:</strong></p>
               <ol>
-                <li>Toca el botón <strong>Compartir</strong> <span className="share-icon">⬆️</span> en la barra de Safari</li>
+                <li>Toca el botón <strong>Compartir</strong> <Icon name="share" size={14} className="share-icon" title="Compartir" /> en la barra de Safari</li>
                 <li>Desplázate y selecciona <strong>"Añadir a pantalla de inicio"</strong></li>
                 <li>Toca <strong>"Añadir"</strong></li>
                 <li>Abre la app desde tu pantalla de inicio</li>
@@ -113,8 +114,8 @@ function NotificationSettings({ onClose }) {
       <div className="notification-settings">
         <div className="notification-header">
           <h3>Notificaciones</h3>
-          <button className="close-btn" onClick={onClose}>
-            <span>×</span>
+          <button className="close-btn" onClick={onClose} aria-label="Cerrar">
+            <Icon name="x" size={20} />
           </button>
         </div>
         <div className="notification-content">
@@ -131,7 +132,7 @@ function NotificationSettings({ onClose }) {
       <div className="notification-header">
         <h3>Notificaciones Diarias</h3>
         <button className="close-btn" onClick={onClose} aria-label="Cerrar">
-          <span>×</span>
+          <Icon name="x" size={20} />
         </button>
       </div>
 
@@ -142,7 +143,7 @@ function NotificationSettings({ onClose }) {
 
         {permission === 'denied' && (
           <div className="notification-warning">
-            <span>⚠️</span>
+            <Icon name="warning" size={22} />
             <p>
               Las notificaciones están bloqueadas. Ve a la configuración de tu navegador para permitirlas.
             </p>
@@ -207,7 +208,8 @@ function NotificationSettings({ onClose }) {
             onClick={handleTestNotification}
             disabled={permission === 'denied'}
           >
-            {testSent ? '¡Enviada!' : 'Enviar prueba'}
+            <Icon name={testSent ? 'check' : 'bell'} size={16} />
+            {testSent ? 'Enviada' : 'Enviar prueba'}
           </button>
         </div>
 
