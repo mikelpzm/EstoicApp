@@ -17,7 +17,10 @@ CHECKS = {
     "long_passage": lambda text: len(text) > 1200,
     "ocr_glued_case": lambda text: bool(re.search(r"[a-záéíóúñ][A-ZÁÉÍÓÚÑ]", text)),
     "orphan_footnote_mark": lambda text: bool(re.search(r"\b[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+'(?=[:\s])|\s'\s", text)),
-    "known_ocr_tokens": lambda text: bool(re.search(r"mimadree|unifonnidad|páados|cuerpO|deLinRo|espíritufamili", text, re.I)),
+    "known_ocr_tokens": lambda text: bool(
+        re.search(r"mimadree|unifonnidad|páados|deLinRo|espíritufamili", text, re.I)
+        or re.search(r"cuerpO", text)
+    ),
     "page_digit_artifact": lambda text: bool(re.search(r"\s\d+\s+(?=misma|virtud|naturaleza|razón|vida|muerte|alma|cuerpo)", text, re.I)),
 }
 
