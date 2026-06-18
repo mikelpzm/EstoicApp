@@ -9,10 +9,11 @@ export default function BookFilter({ selectedBook, onSelectBook, meditationCount
   return (
     <div className="book-filter">
       <h2 className="filter-title">Explorar por libro</h2>
-      <div className="book-grid">
+      <div className="book-grid" role="group" aria-label="Libros disponibles">
         <button
           className={`book-btn ${selectedBook === null ? 'active' : ''}`}
           onClick={() => onSelectBook(null)}
+          aria-pressed={selectedBook === null}
         >
           <span className="book-name">Todos</span>
           <span className="book-count">{meditationCounts.total}</span>
@@ -23,6 +24,7 @@ export default function BookFilter({ selectedBook, onSelectBook, meditationCount
             key={num}
             className={`book-btn ${selectedBook === parseInt(num) ? 'active' : ''}`}
             onClick={() => onSelectBook(parseInt(num))}
+            aria-pressed={selectedBook === parseInt(num)}
           >
             <span className="book-roman">{roman}</span>
             <span className="book-count">{meditationCounts[num] || 0}</span>

@@ -44,7 +44,7 @@ function NotificationSettings({ onClose }) {
   // Caso: iOS con navegador que no es Safari
   if (platform.isIOS && !platform.isSafari) {
     return (
-      <div className="notification-settings">
+      <div className="notification-settings" role="dialog" aria-modal="true" aria-label="Configuración de notificaciones">
         <div className="notification-header">
           <h3>Notificaciones</h3>
           <button className="close-btn" onClick={onClose} aria-label="Cerrar">
@@ -78,7 +78,7 @@ function NotificationSettings({ onClose }) {
   // Caso: iOS con Safari pero no instalado como PWA
   if (platform.isIOS && platform.isSafari && !platform.isStandalone) {
     return (
-      <div className="notification-settings">
+      <div className="notification-settings" role="dialog" aria-modal="true" aria-label="Configuración de notificaciones">
         <div className="notification-header">
           <h3>Notificaciones</h3>
           <button className="close-btn" onClick={onClose} aria-label="Cerrar">
@@ -111,7 +111,7 @@ function NotificationSettings({ onClose }) {
   // Caso: Navegador no soporta notificaciones (desktop antiguo, etc.)
   if (!isSupported) {
     return (
-      <div className="notification-settings">
+      <div className="notification-settings" role="dialog" aria-modal="true" aria-label="Configuración de notificaciones">
         <div className="notification-header">
           <h3>Notificaciones</h3>
           <button className="close-btn" onClick={onClose} aria-label="Cerrar">
@@ -128,7 +128,7 @@ function NotificationSettings({ onClose }) {
   }
 
   return (
-    <div className="notification-settings">
+    <div className="notification-settings" role="dialog" aria-modal="true" aria-label="Configuración de notificaciones">
       <div className="notification-header">
         <h3>Notificaciones Diarias</h3>
         <button className="close-btn" onClick={onClose} aria-label="Cerrar">

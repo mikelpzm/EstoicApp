@@ -6,10 +6,11 @@ export default function ThemeFilter({ themes, selectedTheme, onSelectTheme, medi
   return (
     <div className="theme-filter">
       <h2 className="filter-title">Explorar por temática</h2>
-      <div className="theme-grid">
+      <div className="theme-grid" role="group" aria-label="Temas disponibles">
         <button
           className={`theme-btn ${selectedTheme === null ? 'active' : ''}`}
           onClick={() => onSelectTheme(null)}
+          aria-pressed={selectedTheme === null}
         >
           <span className="theme-icon"><Icon name="library" size={22} /></span>
           <span className="theme-name">Todas</span>
@@ -21,6 +22,7 @@ export default function ThemeFilter({ themes, selectedTheme, onSelectTheme, medi
             key={theme.id}
             className={`theme-btn ${selectedTheme === theme.id ? 'active' : ''}`}
             onClick={() => onSelectTheme(theme.id)}
+            aria-pressed={selectedTheme === theme.id}
           >
             <span className="theme-icon"><Icon name={themeIconNames[theme.id]} size={22} /></span>
             <span className="theme-name">{theme.name}</span>

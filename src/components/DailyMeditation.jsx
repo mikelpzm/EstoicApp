@@ -122,7 +122,7 @@ export default function DailyMeditation({ meditations, themes, bookContexts, ima
       </div>
 
       {showShareModal && dailyMeditation && (
-        <div className="modal-overlay" onClick={() => setShowShareModal(false)}>
+        <div className="modal-overlay" role="presentation" onClick={() => setShowShareModal(false)}>
           <div onClick={(e) => e.stopPropagation()}>
             <ShareImageModal
               meditation={dailyMeditation}
