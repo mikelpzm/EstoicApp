@@ -114,7 +114,7 @@ function ShareImageModal({ meditation, apiKey, onClose, existingImage, onImageGe
   };
 
   return (
-    <div className="share-image-modal">
+    <div className="share-image-modal" role="dialog" aria-modal="true" aria-label="Compartir meditación">
       <div className="share-modal-header">
         <h3><Icon name="share" size={20} /> Compartir Meditación</h3>
         <button className="close-btn" onClick={onClose} aria-label="Cerrar">

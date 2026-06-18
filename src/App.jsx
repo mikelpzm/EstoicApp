@@ -224,6 +224,7 @@ function App() {
 
   return (
     <div className="app">
+      <a className="skip-link" href="#main-content">Saltar al contenido principal</a>
       <Header
         onShowDaily={handleShowDaily}
         onShowAll={handleShowAll}
@@ -235,7 +236,7 @@ function App() {
         isImageGenerationEnabled={imageSettings.enabled && imageSettings.apiKey}
       />
 
-      <main className="main-content">
+      <main id="main-content" className="main-content" tabIndex="-1">
         <section className="hero-panel">
           <div className="hero-copy">
             <span className="eyebrow">Estoicismo practicable</span>
@@ -254,7 +255,16 @@ function App() {
             </span>
             <span className="progress-number">{readingProgress}%</span>
             <span className="progress-label">del corpus marcado como leído</span>
-            <div className="progress-track"><span style={{ width: `${readingProgress}%` }} /></div>
+            <div
+              className="progress-track"
+              role="progressbar"
+              aria-label="Progreso de lectura"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow={readingProgress}
+            >
+              <span style={{ width: `${readingProgress}%` }} />
+            </div>
             <small>{favoriteCount} favoritos · {readCount}/{meditations.length} lecturas</small>
           </div>
         </section>
@@ -330,7 +340,7 @@ function App() {
             </div>
 
             {showRandomShareModal && activeRandomMeditation && (
-              <div className="modal-overlay" onClick={() => setShowRandomShareModal(false)}>
+              <div className="modal-overlay" role="presentation" onClick={() => setShowRandomShareModal(false)}>
                 <div onClick={(e) => e.stopPropagation()}>
                   <ShareImageModal
                     meditation={activeRandomMeditation}
@@ -364,14 +374,19 @@ function App() {
                   aria-label="Buscar meditaciones"
                 />
               </div>
-              <button className={`toggle-pill ${onlyFavorites ? 'active' : ''}`} onClick={() => setOnlyFavorites(!onlyFavorites)}>
+              <button
+                className={`toggle-pill ${onlyFavorites ? 'active' : ''}`}
+                onClick={() => setOnlyFavorites(!onlyFavorites)}
+                aria-pressed={onlyFavorites}
+              >
                 <Icon name="star" size={16} /> Solo favoritos
               </button>
             </section>
 
-            <div className="filter-tabs">
+            <div className="filter-tabs" aria-label="Tipo de filtro de exploración">
               <button
                 className={`filter-tab ${filterType === 'theme' ? 'active' : ''}`}
+                aria-pressed={filterType === 'theme'}
                 onClick={() => {
                   setFilterType('theme');
                   setSelectedBook(null);
@@ -381,6 +396,7 @@ function App() {
               </button>
               <button
                 className={`filter-tab ${filterType === 'book' ? 'active' : ''}`}
+                aria-pressed={filterType === 'book'}
                 onClick={() => {
                   setFilterType('book');
                   setSelectedTheme(null);
@@ -429,7 +445,7 @@ function App() {
       </footer>
 
       {showNotifications && (
-        <div className="modal-overlay" onClick={() => setShowNotifications(false)}>
+        <div className="modal-overlay" role="presentation" onClick={() => setShowNotifications(false)}>
           <div onClick={(e) => e.stopPropagation()}>
             <NotificationSettings onClose={() => setShowNotifications(false)} />
           </div>
@@ -437,7 +453,7 @@ function App() {
       )}
 
       {showImageSettings && (
-        <div className="modal-overlay" onClick={() => setShowImageSettings(false)}>
+        <div className="modal-overlay" role="presentation" onClick={() => setShowImageSettings(false)}>
           <div onClick={(e) => e.stopPropagation()}>
             <ImageSettings
               settings={imageSettings}

@@ -42,7 +42,7 @@ function ImageSettings({ settings, onToggleEnabled, onSetApiKey, onClearApiKey, 
     : '';
 
   return (
-    <div className="image-settings">
+    <div className="image-settings" role="dialog" aria-modal="true" aria-label="Configuración de generación de imágenes">
       <div className="image-settings-header">
         <h3><Icon name="image" size={20} /> Generación de Imágenes</h3>
         <button className="close-btn" onClick={onClose} aria-label="Cerrar">
